@@ -1,5 +1,5 @@
 import { Card, Button, Form, Input } from 'antd'
-import { UserOutlined, LockOutlined  } from '@ant-design/icons'
+import { UserOutlined, LockOutlined, PhoneOutlined  } from '@ant-design/icons'
 
 function Login() {
     
@@ -14,19 +14,29 @@ function Login() {
                 <Form
                     name='login'
                     style={{maxwidth: 360}}
+                    validateTrigger="onBlur"
                     onFinish={onFinish}
                 >
                     <Form.Item 
                         name='username' 
                         rules={[{ required: true, message: '请填写你的姓名' }]}
                     >
-                        <Input prefix={<UserOutlined />} placeholder='请输入姓名' />
+                        <Input prefix={<UserOutlined />} allowClear placeholder='请输入姓名' />
                     </Form.Item>
                     <Form.Item 
                         name='password' 
                         rules={[{ required: true, message: '请填写你的密码' }]}
                     >
-                        <Input prefix={<LockOutlined />} placeholder='请输入密码' />
+                        <Input prefix={<LockOutlined />} allowClear placeholder='请输入密码' />
+                    </Form.Item>
+                    <Form.Item 
+                        name='mobile'
+                        rules={[
+                            { required: true, message: '请填写你的手机号'},
+                            { pattern: /^1[3-9]\d{9}$/, message: '请输入正确的手机号' }
+                        ]}
+                    >
+                        <Input prefix={<PhoneOutlined />} allowClear placeholder='请输入手机号' />
                     </Form.Item>
                     <Form.Item>
                         <Button block type='primary' htmlType='submit'>
