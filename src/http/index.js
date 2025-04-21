@@ -1,7 +1,12 @@
 import axios from 'axios'
+import { baseURL } from './config'
+
+console.log(import.meta.env.MODE, baseURL, '----------');
+
+
 
 const http = axios.create({
-    baseURL: 'http://localhost:4396',
+    baseURL,
     timeout: 10000
 })
 
