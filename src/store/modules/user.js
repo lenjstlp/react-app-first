@@ -18,10 +18,15 @@ const { setToken } = userStore.actions
 
 const userReducer = userStore.reducer
 
-const login = (loginForm) => {
+const login = (loginForm, callback) => {
     return async (dispatch) => {
         const res = await http.post('/api/login', loginForm)
-        dispatch(setToken(res.data))
+        if (res.code === 0) {
+            dispatch(setToken(res.data))
+            callback()
+            return
+        }
+        dispatch(setToken(''))
     }
 }
 
