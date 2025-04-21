@@ -18,10 +18,10 @@ http.interceptors.request.use(config => {
 })
 
 http.interceptors.response.use(response => {
-    const { code } = response.data.code
+    const { code, message: msg } = response.data
     
     if (code !== 0) {
-        message.error('接口请求错误')
+        message.error(msg)
     }
 
     return response.data
