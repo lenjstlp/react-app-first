@@ -25,7 +25,7 @@ const userStore = createSlice({
     }
 })
 
-const { setToken, setUserInfo, clearUserInfo } = userStore.actions
+const { setUserInfo, clearUserInfo } = userStore.actions
 
 const userReducer = userStore.reducer
 
@@ -37,7 +37,7 @@ const login = (loginForm, callback) => {
             callback()
             return
         }
-        dispatch(setToken(''))
+        dispatch(clearUserInfo())
     }
 }
 
