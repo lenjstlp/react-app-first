@@ -1,33 +1,33 @@
-import { Layout, Menu, theme, Breadcrumb } from 'antd'
-import { HomeOutlined, DiffOutlined, EditOutlined, GlobalOutlined, FileTextOutlined } from '@ant-design/icons'
-
+import { Layout, Menu, theme, Breadcrumb, Dropdown, Space, Badge, Avatar, Popover } from 'antd'
+import { HomeOutlined, DiffOutlined, EditOutlined, FileTextOutlined, SoundOutlined } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+
+import AvatarPopover from './AvatarPopover'
+
+import reactLogo from '@/assets/react.svg'
 
 const { Header, Content, Sider } = Layout
 
 const navList = [
     {
         key: '1',
-        label: 'nav1'
+        label: 'web前端'
     },
     {
         key: '2',
-        label: 'nav2'
-    },
-    {
-        key: '3',
-        label: 'nav3'
+        label: 'Unity'
     },
 ]
 
-const items = [
+const menuItems = [
     {
         label: '首页',
         key: '/',
         icon: <HomeOutlined />
     },
     {
-        label: '文章',
+        label: 'React 相关文章',
         key: '/articleManage',
         icon: <FileTextOutlined />,
         children: [
@@ -46,14 +46,16 @@ const items = [
 ]
 
 function ReactLayout() {
-    const navigate = useNavigate()
+    const userInfo = useSelector(state => state.user.userInfo)
+    console.log('用户信息', userInfo)
     
+    const navigate = useNavigate()
     function siderMenuClick({ key }) {
         navigate(key)
     }
 
     const location = useLocation()
-    console.dir(location.pathname, '------');
+    console.log('当前路由', location.pathname);
 
     const { token: { colorBgContainer, borderRadiusLG} } = theme.useToken()
 
@@ -64,16 +66,27 @@ function ReactLayout() {
                     style={{
                         borderRadius: borderRadiusLG
                     }} 
-                    className={`flex justify-center items-center mr-[30px] bg-[#fff] w-[180px] h-[39px] text-[20px]`}>
-                    <GlobalOutlined className="mr-[10px]" />
-                    ReactWeb模型
+                    className={`flex justify-between items-center mr-[30px] bg-[#fff] w-[180px] h-[39px] text-[20px]`}
+                >
+                    <img className='mx-[10px]' src={reactLogo} alt="reactLogo" />
+                    <div className='flex-1'>ReactWeb</div>
                 </div>
                 <Menu 
                     theme="dark"
                     mode="horizontal"
-                    defaultSelectedKeys={['3']}
+                    defaultSelectedKeys={['1']}
                     items={navList}
                 />
+                <div className='ml-auto cursor-pointer'>
+                    <Space size='middle'>
+                        <Badge count={5}>
+                            <Avatar icon={<SoundOutlined />} />
+                        </Badge>
+                        {
+                            <AvatarPopover />
+                        }
+                    </Space>
+                </div>
             </Header>
             <Layout>
                 <Sider width={200} style={{ background: colorBgContainer }}>
@@ -82,7 +95,7 @@ function ReactLayout() {
                         selectedKeys={location.pathname}
                         defaultOpenKeys={['/articleManage']}
                         className='h-[100%] br-[0]'
-                        items={items}
+                        items={menuItems}
                         onClick={siderMenuClick}
                     />
                 </Sider>
