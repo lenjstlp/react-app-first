@@ -1,1 +1,1 @@
-export { vitOptions } from './dict'
+export * from './dict'
