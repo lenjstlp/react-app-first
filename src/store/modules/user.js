@@ -6,25 +6,34 @@ import { setToken as _setToken, getToken } from '@/utils'
 const userStore = createSlice({
     name: 'user',
     initialState: {
-        token: getToken() || ''
+        token: getToken() || '',
+        userInfo: JSON.parse(localStorage.getItem('USER_INfO')) || {}
     },
     reducers: {
-        setToken(state, action) {
-            state.token = action.payload
-            _setToken(action.payload)
+        setUserInfo(state, action) {
+            state.token = action.payload.token
+            _setToken(action.payload.token)
+            state.userInfo = action.payload
+            localStorage.setItem('USER_INfO', JSON.stringify(action.payload))
+        },
+        clearUserInfo(state) {
+            state.token = ''
+            state.userInfo = {}
+            _setToken('')
+            localStorage.setItem('USER_INfO', JSON.stringify({}))
         }
     }
 })
 
-const { setToken } = userStore.actions
+const { setToken, setUserInfo, clearUserInfo } = userStore.actions
 
 const userReducer = userStore.reducer
 
 const login = (loginForm, callback) => {
     return async (dispatch) => {
-        const res = await http.post('/api/login', loginForm)
+        const res = await http.post('/login', loginForm)
         if (res.code === 0) {
-            dispatch(setToken(res.data))
+            dispatch(setUserInfo(res.data))
             callback()
             return
         }
@@ -32,6 +41,6 @@ const login = (loginForm, callback) => {
     }
 }
 
-export { setToken, login }
+export { login, clearUserInfo }
 
 export default userReducer
