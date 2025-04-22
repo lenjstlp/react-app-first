@@ -1,9 +1,10 @@
 import { message } from 'antd'
 import axios from 'axios'
 import { baseURL } from './config'
-import { getToken } from '@/utils'
+import { getToken, removeToken } from '@/utils'
+import router from '@/router'
 
-console.log(import.meta.env.MODE, baseURL, '----------');
+console.log('当前环境', import.meta.env.MODE, baseURL);
 
 
 
@@ -29,8 +30,19 @@ http.interceptors.response.use(response => {
         message.error(msg)
     }
 
+    if (code === 401) {
+        removeToken()
+        router.navigate('/login')
+    }
+
     return response.data
 }, error => {
+
+    if (error.status === 401) {
+        removeToken()
+        router.navigate('/login')
+    }
+
     return Promise.reject(error)
 })
 
