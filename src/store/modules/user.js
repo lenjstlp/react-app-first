@@ -1,6 +1,6 @@
 // 用户相关状态管理
 import { createSlice } from '@reduxjs/toolkit'
-import http from '@/http'
+import { login as loginAPI } from '@/apis/user'
 import { setToken as _setToken, getToken } from '@/utils'
 
 const userStore = createSlice({
@@ -31,7 +31,7 @@ const userReducer = userStore.reducer
 
 const login = (loginForm, callback) => {
     return async (dispatch) => {
-        const res = await http.post('/login', loginForm)
+        const res = await loginAPI('/login', loginForm)
         if (res.code === 0) {
             dispatch(setUserInfo(res.data))
             callback()

@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import http from '@/http'
+import { log401 } from '@/apis/common'
 
 function Home() {
 
     useEffect(() => {
         async function getLogout401() {
-            const res = await http.get('/logout401')
+            const res = await log401('/logout401')
             console.log(res, '===---');
         }
         // getLogout401()
