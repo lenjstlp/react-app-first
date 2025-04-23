@@ -10,7 +10,14 @@ export default defineConfig({
   plugins: [
     react(), 
     tailwindcss(), 
-    visualizer()
+    visualizer({
+      filename: 'size.html',
+      title: '项目体积分析报告',
+      open: false,
+      gzipSize: true,
+      brotliSize: true,
+      emitFile: false,
+    })
   ],
   resolve: {
     alias: [
