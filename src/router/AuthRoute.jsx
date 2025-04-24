@@ -1,11 +1,9 @@
 import { getToken } from '@/utils'
 import { Navigate, useLocation } from 'react-router-dom'
-import router from './index'
 
 export function AuthRoute({ children }) {
     const token = getToken()
     const location = useLocation()
-    console.log('router.route', router.routes);
 
     if (token) {
         // 若登录且跳转去登录页，导航到首页
