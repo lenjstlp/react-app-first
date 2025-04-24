@@ -1,7 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, memo } from 'react'
 import * as echarts from 'echarts';
 
-function Charts({ width = '300px', height = '300px', options }) {
+const ChartsMemo = memo(function Charts({ width = '300px', height = '300px', options }) {
+    console.log('charts组件渲染', options);
+    
     const chartRef = useRef(null)
     useEffect(() => {
         const myChart = echarts.init(chartRef.current);
@@ -13,6 +15,6 @@ function Charts({ width = '300px', height = '300px', options }) {
             <div ref={chartRef} style={{ width, height }}></div>
         </div>
     )
-}
+})
 
-export default Charts
+export default ChartsMemo
