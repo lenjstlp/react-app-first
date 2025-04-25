@@ -1,4 +1,4 @@
-import { Space, theme } from 'antd'
+import { Space, theme, message } from 'antd'
 import { loginWay } from "@/common";
 
 
@@ -6,7 +6,7 @@ function OtherLogin() {
     const { token: { borderRadiusLG } } = theme.useToken()
 
     function loginWayClick(val) {
-        console.log(val.label + '登录暂未接入' );
+        message.info(val.label, '登录暂未接入')
     }
 
     return (
