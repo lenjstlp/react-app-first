@@ -27,7 +27,7 @@ const menuItems = [
         icon: <HomeOutlined />
     },
     {
-        label: 'React 相关文章',
+        label: '文章',
         key: '/articleManage',
         icon: <FileTextOutlined />,
         children: [
@@ -61,18 +61,21 @@ function ReactLayout() {
 
     return (
         <Layout className='h-[100%]'>
-            <Header className="flex items-center">
+            <div className="flex items-center bg-[#fff] h-[55px] px-[15px]">
                 <div
                     style={{
                         borderRadius: borderRadiusLG
                     }} 
-                    className={`flex justify-between items-center mr-[30px] bg-[#fff] w-[180px] h-[39px] text-[20px]`}
+                    className={`flex justify-between items-center mr-[30px] cursor-pointer bg-[#fff] w-[180px] h-[39px] text-[20px]`}
                 >
                     <img className='mx-[10px]' src={reactLogo} alt="reactLogo" />
                     <div className='flex-1'>ReactWeb</div>
                 </div>
-                <Menu 
-                    theme="dark"
+                <Menu
+                    className='min-w-[500px]'
+                    style={{
+                        borderBottom: 0
+                    }}
                     mode="horizontal"
                     defaultSelectedKeys={['1']}
                     items={navList}
@@ -87,7 +90,7 @@ function ReactLayout() {
                         }
                     </Space>
                 </div>
-            </Header>
+            </div>
             <Layout>
                 <Sider width={200} style={{ background: colorBgContainer }}>
                     <Menu 
