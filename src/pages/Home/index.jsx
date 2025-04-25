@@ -7,7 +7,7 @@ function Home() {
     const [count, setCount] = useState(10)
     useEffect(() => {
         async function getLogout401() {
-            const res = await log401('/logout401')
+            const res = await log401()
             console.log(res, '===---');
         }
         // getLogout401()

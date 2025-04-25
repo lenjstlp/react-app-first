@@ -31,7 +31,7 @@ const userReducer = userStore.reducer
 
 const login = (loginForm, callback) => {
     return async (dispatch) => {
-        const res = await loginAPI('/login', loginForm)
+        const res = await loginAPI(loginForm)
         if (res.code === 0) {
             dispatch(setUserInfo(res.data))
             callback()
