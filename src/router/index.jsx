@@ -27,15 +27,18 @@ const router = createBrowserRouter([
             {
                 // path: '/home',
                 index: true,
+                name: '首页',
                 element: lazyLoad(() => import('@/pages/Home'))
             },
             {
-                path: '/article',
-                element: lazyLoad(() => import('@/pages/Article'))
+                path: '/publish',
+                name: '创建文章',
+                element: lazyLoad(() => import('@/pages/publish'))
             },
             {
-                path: '/publish',
-                element: lazyLoad(() => import('@/pages/Publish'))
+                path: '/articleManage',
+                name: '管理文章',
+                element: lazyLoad(() => import('@/pages/articleManage'))
             },
         ]
     },
