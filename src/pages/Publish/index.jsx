@@ -1,28 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Form, Input, Select, Upload, Radio, Button, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import Editor from '@/components/editor'
-import { getDict } from '@/apis/common'
 import { publishArticle } from '@/apis/article'
+import useDicts from '@/hooks/useDicts'
 
 function Publish() {
     // form实例绑定
     const [form] = Form.useForm()
 
     // 频道字典获取
-    async function getDictList() {
-        const { code, data }= await getDict({
-            type: 'ARTICLE_CHANNEL'
-        })
-        if (code === 0) {
-            setChannelList(data)
-        }
-    }
-    useEffect(() => {
-        getDictList()
-    }, [])
-    const [channelList, setChannelList] = useState([])
-
+    const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL,YES_NO' })
+    
     async function onFinish(val) {
         const params = {
             ...val
@@ -35,14 +24,14 @@ function Publish() {
     }
 
     // 封面&图片组联动，无图时隐藏
-    const [picShow, SetPicShow] = useState(true)
+    const [picShow, SetPicShow] = useState('1')
     const coverList = [
         { value: '1', label: '单图' },
         { value: '2', label: '三图' },
         { value: '3', label: '无图' },
     ]
     function radioGroupChange(e) {
-        e.target.value === '3' ? SetPicShow(false) : SetPicShow(true)
+        SetPicShow(e.target.value)
     }
 
     return (
@@ -67,7 +56,8 @@ function Publish() {
                 <Form.Item label="频道" name='channel'>
                     <Select placeholder='请选择文章频道'>
                         {
-                            channelList.map(i => {
+                            dicts['ARTICLE_CHANNEL'] &&
+                            dicts['ARTICLE_CHANNEL'].map(i => {
                                 return  (
                                     <Select.Option value={i.value} key={i.value}>{ i.label }</Select.Option>
                                 )
@@ -87,9 +77,12 @@ function Publish() {
                     </Radio.Group>
                 </Form.Item>
                 {
-                    picShow && 
+                    picShow !== '3' && 
                     <Form.Item label={null} name='pic'>
-                        <Upload action="/upload.do" listType="picture-card">
+                        <Upload 
+                            action="/upload.do" 
+                            listType="picture-card"
+                        >
                             <button
                                 style={{ color: 'inherit', cursor: 'inherit', border: 0, background: 'none' }}
                                 type="button"
