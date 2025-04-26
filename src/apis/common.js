@@ -5,3 +5,8 @@ import http from '@/http'
 export function log401() {
     return http.get('/logout401')
 }
+
+// 字典获取
+export function getDict(data) {
+    return http.post('/dict/getDicts', data)
+}
