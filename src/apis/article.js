@@ -5,3 +5,8 @@ import http from '@/http'
 export function publishArticle(data) {
     return http.post('/article/upload', data)
 }
+
+// 文章列表
+export function getList() {
+    return http.get('/article/getArticleList')
+}
