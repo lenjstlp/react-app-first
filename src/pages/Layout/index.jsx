@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Layout, Menu, theme, Breadcrumb, Dropdown, Space, Badge, Avatar, Popover } from 'antd'
 import { HomeOutlined, DiffOutlined, EditOutlined, FileTextOutlined, SoundOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
@@ -28,7 +29,7 @@ const menuItems = [
     },
     {
         label: '文章',
-        key: '/articleManage',
+        key: '/article',
         icon: <FileTextOutlined />,
         children: [
             { 
@@ -37,8 +38,42 @@ const menuItems = [
                 icon: <DiffOutlined />
             },
             { 
-                key: '/article', 
+                key: '/articleManage', 
                 label: '管理文章',
+                icon: <EditOutlined />
+            },
+        ]
+    },
+    {
+        label: '字典',
+        key: '/dicts',
+        icon: <FileTextOutlined />,
+        children: [
+            { 
+                key: '/createDict', 
+                label: '创建字典',
+                icon: <DiffOutlined />
+            },
+            { 
+                key: '/manageDicts', 
+                label: '管理字典',
+                icon: <EditOutlined />
+            },
+        ]
+    },
+    {
+        label: '用户',
+        key: '/users',
+        icon: <FileTextOutlined />,
+        children: [
+            { 
+                key: '/userList', 
+                label: '用户列表',
+                icon: <DiffOutlined />
+            },
+            { 
+                key: '/manageUsers', 
+                label: '用户管理',
                 icon: <EditOutlined />
             },
         ]
@@ -59,9 +94,15 @@ function ReactLayout() {
 
     const { token: { colorBgContainer, borderRadiusLG} } = theme.useToken()
 
+    // 面包屑
+    const [breadcrumbItems, setBreadcrumbItems] = useState([
+        { title: 'Home' }, 
+        { title: 'List' }
+    ])
+
     return (
         <Layout className='h-[100%]'>
-            <div className="flex items-center bg-[#fff] h-[55px] px-[15px]">
+            <div className="flex items-center bg-[#fff] h-[55px] px-[15px] shrink-0">
                 <div
                     style={{
                         borderRadius: borderRadiusLG
@@ -96,23 +137,23 @@ function ReactLayout() {
                     <Menu 
                         mode='inline' 
                         selectedKeys={location.pathname}
-                        defaultOpenKeys={['/articleManage']}
+                        defaultOpenKeys={['/article']}
                         className='h-[100%] br-[0]'
                         items={menuItems}
                         onClick={siderMenuClick}
                     />
                 </Sider>
-                <Layout className="p-[15px]">
-                    {/* <Breadcrumb
-                        items={[{ title: 'Home' }, { title: 'List' }, { title: 'App' }]}
+                <Layout className="p-[15px] pt-[0] overflow-hidden">
+                    <Breadcrumb
+                        items={breadcrumbItems}
                         style={{ margin: '16px 0' }}
-                    /> */}
+                    />
                     <Content
                         style={{
                             backgroundColor: colorBgContainer,
                             borderRadius: borderRadiusLG
                         }}
-                        className='p-[15px] m-[0] min-h-300'>
+                        className='p-[15px] m-[0] min-h-300 overflow-auto'>
                         <Outlet />
                     </Content>
                 </Layout>
