@@ -13,11 +13,11 @@ const { Header, Content, Sider } = Layout
 const navList = [
     {
         key: '1',
-        label: 'web前端'
+        label: '管理平台'
     },
     {
         key: '2',
-        label: 'Unity'
+        label: '赏金code'
     },
 ]
 
@@ -45,19 +45,41 @@ const menuItems = [
         ]
     },
     {
-        label: '字典',
-        key: '/dicts',
+        label: '基础服务',
+        key: '/basicServices',
         icon: <FileTextOutlined />,
         children: [
-            { 
-                key: '/createDict', 
-                label: '创建字典',
-                icon: <DiffOutlined />
+            {
+                label: '字典平台',
+                key: '/dicts',
+                children: [
+                    { 
+                        key: '/createDict', 
+                        label: '创建字典',
+                        icon: <DiffOutlined />
+                    },
+                    { 
+                        key: '/manageDicts', 
+                        label: '管理字典',
+                        icon: <EditOutlined />
+                    },
+                ],
             },
-            { 
-                key: '/manageDicts', 
-                label: '管理字典',
-                icon: <EditOutlined />
+            {
+                label: '权限',
+                key: '/permission',
+                children: [
+                    { 
+                        key: '/permissionList', 
+                        label: '权限列表',
+                        icon: <DiffOutlined />
+                    },
+                    { 
+                        key: '/managePermission', 
+                        label: '权限管理',
+                        icon: <EditOutlined />
+                    },
+                ],
             },
         ]
     },
@@ -74,23 +96,6 @@ const menuItems = [
             { 
                 key: '/manageUsers', 
                 label: '用户管理',
-                icon: <EditOutlined />
-            },
-        ]
-    },
-    {
-        label: '权限',
-        key: '/permission',
-        icon: <FileTextOutlined />,
-        children: [
-            { 
-                key: '/permissionList', 
-                label: '权限列表',
-                icon: <DiffOutlined />
-            },
-            { 
-                key: '/managePermission', 
-                label: '权限管理',
                 icon: <EditOutlined />
             },
         ]
@@ -112,10 +117,10 @@ function ReactLayout() {
     const { token: { colorBgContainer, borderRadiusLG} } = theme.useToken()
 
     // 面包屑
-    const [breadcrumbItems, setBreadcrumbItems] = useState([
-        { title: 'Home' }, 
-        { title: 'List' }
-    ])
+    // const [breadcrumbItems, setBreadcrumbItems] = useState([
+    //     { title: 'Home' }, 
+    //     { title: 'List' }
+    // ])
 
     return (
         <Layout className='h-[100%]'>
@@ -127,7 +132,7 @@ function ReactLayout() {
                     className={`flex justify-between items-center mr-[30px] cursor-pointer bg-[#fff] w-[180px] h-[39px] text-[20px]`}
                 >
                     <img className='mx-[10px]' src={reactLogo} alt="reactLogo" />
-                    <div className='flex-1'>ReactWeb</div>
+                    <div className='flex-1'>赏金code</div>
                 </div>
                 <Menu
                     className='min-w-[500px]'
@@ -154,17 +159,17 @@ function ReactLayout() {
                     <Menu 
                         mode='inline' 
                         selectedKeys={location.pathname}
-                        defaultOpenKeys={['/article']}
+                        defaultOpenKeys={['/article', '/basicServices', '/dicts', '/permission']}
                         className='h-[100%] br-[0]'
                         items={menuItems}
                         onClick={siderMenuClick}
                     />
                 </Sider>
-                <Layout className="p-[15px] pt-[0] overflow-hidden">
-                    <Breadcrumb
+                <Layout className="p-[15px] overflow-hidden">
+                    {/* <Breadcrumb
                         items={breadcrumbItems}
                         style={{ margin: '16px 0' }}
-                    />
+                    /> */}
                     <Content
                         style={{
                             backgroundColor: colorBgContainer,
