@@ -3,10 +3,10 @@ export { lazyLoad } from './lazyLoad'
 import dayjs from 'dayjs'
 
 // 字典label选取
-export function dictSelect(arr, value) {
+export function dictSelect(arr, value, field = 'label') {
     return arr.find(i => {
         return i.value === value
-    })?.label || value
+    })?.[field] || value
 }
 // 时间快捷方法
 export function formatDate(val, date = 'YYYY-MM-DD HH:mm:ss') {
