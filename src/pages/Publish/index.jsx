@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Input, Select, Upload, Radio, Button, message } from 'antd'
+import { Form, Input, Select, Upload, Radio, Button, message, Image } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import Editor from '@/components/editor'
 import { publishArticle } from '@/apis/article'
@@ -13,10 +13,17 @@ function Publish() {
     const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL,YES_NO' })
     
     async function onFinish(val) {
-        const params = {
-            ...val
+        if (Number(val.cover) !== fileList.length) {
+            return message.warning('封面类型与上传图片数量不匹配')
         }
-        const { code } = await publishArticle(params)
+        const formData = new FormData()
+        fileList.forEach(file => {
+            formData.append('pics', file.originFileObj)
+        })
+        Object.keys(val).forEach(i => {
+            i !== 'pic' && formData.append(i, val[i])
+        })
+        const { code } = await publishArticle(formData)
         if (code === 0) {
             form.resetFields()
             message.success('创建文章成功')
@@ -27,13 +34,33 @@ function Publish() {
     const [picShow, SetPicShow] = useState('1')
     const coverList = [
         { value: '1', label: '单图' },
-        { value: '2', label: '三图' },
-        { value: '3', label: '无图' },
+        { value: '3', label: '三图' },
+        { value: '0', label: '无图' },
     ]
     function radioGroupChange(e) {
         SetPicShow(e.target.value)
     }
 
+    // 封面图片上传
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [fileList, setFileList] = useState([])
+    function handleChange(val) {
+        console.log(val, '-------');
+        setFileList(val.fileList)
+    }
+    function handlePreview(file) {
+        console.log(file, 'file===');
+        setPreviewImage(file.url || file.thumbUrl);
+        setPreviewOpen(true);
+    }
+    const uploadButton = (
+        <button style={{ border: 0, background: 'none' }} type="button">
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+      );
+ 
     return (
         <div className='h-[100%]'>
             <Form
@@ -77,19 +104,32 @@ function Publish() {
                     </Radio.Group>
                 </Form.Item>
                 {
-                    picShow !== '3' && 
+                    picShow !== '0' && 
                     <Form.Item label={null} name='pic'>
                         <Upload 
-                            action="/upload.do" 
                             listType="picture-card"
+                            maxCount={picShow}
+                            onChange={handleChange}
+                            onPreview={handlePreview}
+                            beforeUpload={() => false}
                         >
-                            <button
-                                style={{ color: 'inherit', cursor: 'inherit', border: 0, background: 'none' }}
-                                type="button"
-                            >
-                                <PlusOutlined />
-                            </button>
+                            {
+                                 uploadButton
+                            }
                         </Upload>
+                        {
+                            previewImage && (
+                                <Image
+                                    wrapperStyle={{ display: 'none' }}
+                                    preview={{
+                                        visible: previewOpen,
+                                        onVisibleChange: visible => setPreviewOpen(visible),
+                                        afterOpenChange: visible => !visible && setPreviewImage(''),
+                                    }}
+                                    src={previewImage}
+                                />
+                            )
+                        }
                 </Form.Item>
                 }
                 <Form.Item label="内容" name='content' rules={[{ required: true, message: '请填写文章内容' }]}>
