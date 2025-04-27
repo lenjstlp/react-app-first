@@ -78,6 +78,23 @@ const menuItems = [
             },
         ]
     },
+    {
+        label: '权限',
+        key: '/permission',
+        icon: <FileTextOutlined />,
+        children: [
+            { 
+                key: '/permissionList', 
+                label: '权限列表',
+                icon: <DiffOutlined />
+            },
+            { 
+                key: '/managePermission', 
+                label: '权限管理',
+                icon: <EditOutlined />
+            },
+        ]
+    },
 ]
 
 function ReactLayout() {
