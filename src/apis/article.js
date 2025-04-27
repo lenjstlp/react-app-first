@@ -10,3 +10,8 @@ export function publishArticle(data) {
 export function getList() {
     return http.get('/article/getArticleList')
 }
+
+// 删除文章
+export function deleteArticle(data) {
+    return http.post('/article/deleteById', data)
+}
