@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
-import { message, Table, Tooltip, Button, Space, Popconfirm } from 'antd'
+import { message, Table, Tooltip, Button, Space, Tag, Popconfirm } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { formatDate } from '@/utils'
+import { formatDate, dictSelect } from '@/utils'
 import { getList, deleteArticle } from '@/apis/article'
+import useDicts from '@/hooks/useDicts'
 
 function ArticleManage() {
+    const { dicts } = useDicts({ type: 'AUDIT_STATUS' })
     const [articleList, setArticleList] = useState([])
     async function queryArticleList() {
         const {code, data} = await getList()
@@ -38,7 +40,12 @@ function ArticleManage() {
             title: '审核状态',
             dataIndex: 'audit',
             key: 'audit',
-            minWidth: 90
+            minWidth: 90,
+            render: val => {
+                return (
+                    <Tag color={dictSelect(dicts['AUDIT_STATUS'], val, 'color')}>{ dictSelect(dicts['AUDIT_STATUS'], val) }</Tag>
+                )
+            }
         },
         {
             title: '创建时间',
