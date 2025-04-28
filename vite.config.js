@@ -9,21 +9,18 @@ import AutoImport from 'unplugin-auto-import/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(), 
-    tailwindcss(), 
+    react(),
+    tailwindcss(),
     visualizer({
       filename: 'size.html',
       title: '项目体积分析报告',
       open: false,
       gzipSize: true,
       brotliSize: true,
-      emitFile: false,
+      emitFile: false
     }),
     AutoImport({
-      imports: [
-        'react',
-        'react-router-dom',
-      ],
+      imports: ['react', 'react-router-dom'],
       eslintrc: {
         enabled: true
       }
@@ -44,7 +41,7 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:4399',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }
