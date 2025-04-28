@@ -1,13 +1,13 @@
 // TinyMCE so the global var exists
-import 'tinymce/tinymce';
+import 'tinymce/tinymce'
 // DOM model
 import 'tinymce/models/dom/model'
 // Theme
-import 'tinymce/themes/silver';
+import 'tinymce/themes/silver'
 // Toolbar icons
-import 'tinymce/icons/default';
+import 'tinymce/icons/default'
 // Editor styles
-import 'tinymce/skins/ui/oxide/skin';
+import 'tinymce/skins/ui/oxide/skin'
 
 // importing the plugin js.
 // if you use a plugin that is not listed here the editor will fail to load
@@ -39,7 +39,7 @@ import 'tinymce/skins/ui/oxide/skin';
 // import 'tinymce/plugins/table';
 // import 'tinymce/plugins/visualblocks';
 // import 'tinymce/plugins/visualchars';
-import 'tinymce/plugins/wordcount';
+import 'tinymce/plugins/wordcount'
 
 // importing plugin resources
 // import 'tinymce/plugins/emoticons/js/emojis';

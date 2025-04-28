@@ -34,7 +34,8 @@ export default [
     },
     rules: {
       ...pluginReact.configs.recommended.rules, // 手动合并推荐规则
-      'react/react-in-jsx-scope': 'off'
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off'
     }
   },
 
