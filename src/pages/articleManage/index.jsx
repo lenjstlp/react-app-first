@@ -1,24 +1,43 @@
 import { useEffect, useState } from 'react'
-import { message, Table, Tooltip, Button, Space, Tag, Popconfirm } from 'antd'
+import { message, Table, Tooltip, Button, Space, Tag, Popconfirm, Form, Radio, Select, DatePicker } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { formatDate, dictSelect } from '@/utils'
 import { getList, deleteArticle } from '@/apis/article'
 import useDicts from '@/hooks/useDicts'
 
 function ArticleManage() {
-    const { dicts } = useDicts({ type: 'AUDIT_STATUS' })
-    const [articleList, setArticleList] = useState([])
-    async function queryArticleList() {
-        const {code, data} = await getList()
+    const { dicts } = useDicts({ type: 'AUDIT_STATUS,ARTICLE_CHANNEL' })
+
+    // form
+    const[articleParams, setArticleParams] = useState({
+        audit: '1',
+        channel: '',
+        startTime: '',
+        endTime: '',
+        pageNum: 1,
+        pageSize: 10
+    })
+    function onFinish(val) {
+        setArticleParams({
+            ...articleParams,
+            audit: val.audit,
+            channel: val.channel,
+            startTime: val.date?.[0]?.format('YYYY-MM-DD'),
+            endTime: val.date?.[1]?.format('YYYY-MM-DD'),
+        })
+    }
+
+    async function queryArticleList(val) {
+        const {code, data} = await getList(val)
         if(code === 0) {
-            console.log(data, '======111');
-            setArticleList(data)
+            setArticleList(data.data)
+            setTotal(data.total)
             message.success('成功获取文章列表')
         }
     }
     useEffect(() => {
-        queryArticleList()
-    }, [])
+        queryArticleList(articleParams)
+    }, [articleParams])
 
     async function deleteClick(id) {
         const { code } = await deleteArticle({ articleId: id })
@@ -28,6 +47,8 @@ function ArticleManage() {
         }
     }
 
+    const [articleList, setArticleList] = useState([])
+    const [total, setTotal] = useState(0)
     // table
     const columns = [
         {
@@ -131,11 +152,62 @@ function ArticleManage() {
         },
     ]
 
+    // page
+    function pageChange(page, pageSize) {
+        setArticleParams({
+            ...articleParams,
+            pageNum: page,
+            pageSize: pageSize
+        })
+    }
+
     return (
         <div className='h-[100%] flex flex-col'>
-            <div className='h-[20%]'>筛选form</div>
+            <div className='h-[10%]'>
+                <Form
+                    layout="inline"
+                    initialValues={{
+                        audit: '3',
+                    }}
+                    onFinish={onFinish}
+                >
+                    <Form.Item className='w-[300px]' label="状态" name='audit'>
+                        <Radio.Group>
+                            <Radio value="3"> 全部 </Radio>
+                            <Radio value="0"> 未审核 </Radio>
+                            <Radio value="1"> 审核通过 </Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    <Form.Item className='w-[260px]' label="频道" name='channel'>
+                        <Select placeholder='请选择频道'>
+                            {
+                                dicts['ARTICLE_CHANNEL'] && 
+                                dicts['ARTICLE_CHANNEL'].map(i => {
+                                    return (
+                                        <Select.Option value={i.value}>{ i.label }</Select.Option>
+                                    )
+                                })
+                            }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item className='w-[300px]' label="日期" name='date'>
+                        <DatePicker.RangePicker  />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button block type="primary" htmlType="submit">
+                            筛 选
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
             <div className='flex-1'>
-                <Table columns={columns} dataSource={articleList}></Table>
+                <Table columns={columns} dataSource={articleList} pagination={{
+                    total: total,
+                    current: articleParams.pageNum,
+                    pageSize: articleParams.pageSize,
+                    pageSizeOptions: [10, 20, 50, 100],
+                    onChange: pageChange
+                }} /> 
             </div>
         </div>
     )

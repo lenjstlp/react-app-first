@@ -7,8 +7,8 @@ export function publishArticle(data) {
 }
 
 // 文章列表
-export function getList() {
-    return http.get('/article/getArticleList')
+export function getList(data) {
+    return http.post('/article/pageList', data)
 }
 
 // 删除文章

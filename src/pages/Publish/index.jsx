@@ -10,7 +10,7 @@ function Publish() {
     const [form] = Form.useForm()
 
     // 频道字典获取
-    const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL,YES_NO' })
+    const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL' })
     
     async function onFinish(val) {
         if (Number(val.cover) !== fileList.length) {
