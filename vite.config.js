@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
 
 import { visualizer } from 'rollup-plugin-visualizer'
+import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,6 +18,15 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
       emitFile: false,
+    }),
+    AutoImport({
+      imports: [
+        'react',
+        'react-router-dom',
+      ],
+      eslintrc: {
+        enabled: true
+      }
     })
   ],
   resolve: {

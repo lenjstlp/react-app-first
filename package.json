@@ -39,6 +39,7 @@
     "globals": "^15.15.0",
     "rollup-plugin-visualizer": "^5.14.0",
     "sass": "^1.86.3",
+    "unplugin-auto-import": "^19.1.2",
     "vite": "^6.2.0"
   }
 }
