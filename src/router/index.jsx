@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={'加载中'}>
+      <Suspense fallback={'加载组件动画...'}>
         <AuthRoute>
           <Layout />
         </AuthRoute>
@@ -31,20 +31,37 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        // path: '/home',
-        index: true,
-        name: '首页',
-        element: lazyLoad(() => import('@/pages/Home'))
+        path: '/backend',
+        name: '管理平台',
+        element: lazyLoad(() => import('@/pages/Layout/Backend')),
+        children: [
+          {
+            path: '/backend',
+            index: true,
+            name: '首页',
+            element: lazyLoad(() => import('@/pages/Home'))
+          },
+          {
+            path: '/backend/publish',
+            name: '创建文章',
+            element: lazyLoad(() => import('@/pages/publish'))
+          },
+          {
+            path: '/backend/articleManage',
+            name: '管理文章',
+            element: lazyLoad(() => import('@/pages/articleManage'))
+          }
+        ]
       },
       {
-        path: '/publish',
-        name: '创建文章',
-        element: lazyLoad(() => import('@/pages/publish'))
+        path: '/',
+        name: '研究院',
+        element: lazyLoad(() => import('@/pages/CodeResearch'))
       },
       {
-        path: '/articleManage',
-        name: '管理文章',
-        element: lazyLoad(() => import('@/pages/articleManage'))
+        path: '/write',
+        name: '写文章',
+        element: lazyLoad(() => import('@/pages/CodeResearch/Write'))
       }
     ]
   },

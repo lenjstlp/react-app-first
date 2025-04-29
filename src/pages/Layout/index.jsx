@@ -1,133 +1,48 @@
-import { Layout, Menu, theme, Space, Badge, Avatar } from 'antd'
-import {
-  HomeOutlined,
-  DiffOutlined,
-  EditOutlined,
-  FileTextOutlined,
-  SoundOutlined
-} from '@ant-design/icons'
-import { useSelector } from 'react-redux'
+import { useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Layout, Menu, theme, Space, Badge, Avatar } from 'antd'
+import { SoundOutlined } from '@ant-design/icons'
+import { useSelector } from 'react-redux'
 
 import AvatarPopover from './AvatarPopover'
+import BackEnd from './BackEnd'
+import CodeResearch from '@/pages/CodeResearch'
 
 import reactLogo from '@/assets/react.svg'
 
-const { Content, Sider } = Layout
-
-const navList = [
-  {
-    key: '1',
-    label: '管理平台'
-  },
-  {
-    key: '2',
-    label: '研究院'
-  }
-]
-
-const menuItems = [
-  {
-    label: '首页',
-    key: '/',
-    icon: <HomeOutlined />
-  },
-  {
-    label: '文章',
-    key: '/article',
-    icon: <FileTextOutlined />,
-    children: [
-      {
-        key: '/publish',
-        label: '创建文章',
-        icon: <DiffOutlined />
-      },
-      {
-        key: '/articleManage',
-        label: '管理文章',
-        icon: <EditOutlined />
-      }
-    ]
-  },
-  {
-    label: '基础服务',
-    key: '/basicServices',
-    icon: <FileTextOutlined />,
-    children: [
-      {
-        label: '字典平台',
-        key: '/dicts',
-        children: [
-          {
-            key: '/createDict',
-            label: '创建字典',
-            icon: <DiffOutlined />
-          },
-          {
-            key: '/manageDicts',
-            label: '管理字典',
-            icon: <EditOutlined />
-          }
-        ]
-      },
-      {
-        label: '权限',
-        key: '/permission',
-        children: [
-          {
-            key: '/permissionList',
-            label: '权限列表',
-            icon: <DiffOutlined />
-          },
-          {
-            key: '/managePermission',
-            label: '权限管理',
-            icon: <EditOutlined />
-          }
-        ]
-      }
-    ]
-  },
-  {
-    label: '用户',
-    key: '/users',
-    icon: <FileTextOutlined />,
-    children: [
-      {
-        key: '/userList',
-        label: '用户列表',
-        icon: <DiffOutlined />
-      },
-      {
-        key: '/manageUsers',
-        label: '用户管理',
-        icon: <EditOutlined />
-      }
-    ]
-  }
-]
-
 function ReactLayout() {
+  // user
   const userInfo = useSelector((state) => state.user.userInfo)
   console.log('用户信息', userInfo)
 
+  // nav
   const navigate = useNavigate()
-  function siderMenuClick({ key }) {
-    navigate(key)
+  const location = useLocation()
+  console.log(location, '====')
+
+  const navList = [
+    {
+      key: '1',
+      value: '/',
+      label: '研究院',
+      ui: <CodeResearch />
+    },
+    {
+      key: '2',
+      value: '/backend',
+      label: '管理平台',
+      ui: <BackEnd />
+    }
+  ]
+  const [navValue, setNaveValue] = useState('2')
+  function navListClick({ item, key }) {
+    navigate(item.props.value)
+    setNaveValue(key)
   }
 
-  const location = useLocation()
-  console.log('当前路由', location.pathname)
-
   const {
-    token: { colorBgContainer, borderRadiusLG }
+    token: { borderRadiusLG }
   } = theme.useToken()
-
-  // 面包屑
-  // const [breadcrumbItems, setBreadcrumbItems] = useState([
-  //     { title: 'Home' },
-  //     { title: 'List' }
-  // ])
 
   return (
     <Layout className='h-[100%]'>
@@ -146,8 +61,10 @@ function ReactLayout() {
             borderBottom: 0
           }}
           mode='horizontal'
-          defaultSelectedKeys={['1']}
+          selectedKeys={navValue}
+          defaultSelectedKeys={[navValue]}
           items={navList}
+          onClick={navListClick}
         />
         <div className='ml-auto cursor-pointer'>
           <Space size='middle'>
@@ -158,37 +75,9 @@ function ReactLayout() {
           </Space>
         </div>
       </div>
-      <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
-          <Menu
-            mode='inline'
-            selectedKeys={location.pathname}
-            defaultOpenKeys={[
-              '/article',
-              '/basicServices',
-              '/dicts',
-              '/permission'
-            ]}
-            className='h-[100%] br-[0]'
-            items={menuItems}
-            onClick={siderMenuClick}
-          />
-        </Sider>
-        <Layout className='p-[15px] overflow-hidden'>
-          {/* <Breadcrumb
-                        items={breadcrumbItems}
-                        style={{ margin: '16px 0' }}
-                    /> */}
-          <Content
-            style={{
-              backgroundColor: colorBgContainer,
-              borderRadius: borderRadiusLG
-            }}
-            className='p-[15px] m-[0] min-h-300 overflow-auto'>
-            <Outlet />
-          </Content>
-        </Layout>
-      </Layout>
+      <div className='h-[calc(100%-60px)] overflow-y-auto'>
+        <Outlet />
+      </div>
     </Layout>
   )
 }
