@@ -6,9 +6,9 @@ function CodeResearch() {
   const navigate = useNavigate()
 
   return (
-    <div className='flex justify-center h-[100%]'>
+    <div className='flex justify-center mt-[15px]'>
       <div>左侧导航</div>
-      <div className='w-[800px] p-[15px] rounded-[10px] h-[100%] bg-[#fff]'>
+      <div className='w-[800px] p-[15px] rounded-[10px] bg-[#fff]'>
         <Viewer />
         <Button onClick={() => navigate('/write')}>写文章</Button>
       </div>
