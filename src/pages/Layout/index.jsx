@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { Layout, Menu, theme, Space, Badge, Avatar } from 'antd'
 import { SoundOutlined } from '@ant-design/icons'
@@ -39,6 +39,9 @@ function ReactLayout() {
     navigate(item.props.value)
     setNaveValue(key)
   }
+  useEffect(() => {
+    navValue === '2' ? navigate('/backend') : navigate('/')
+  }, [])
 
   const {
     token: { borderRadiusLG }
@@ -56,7 +59,7 @@ function ReactLayout() {
           <div className='flex-1'>代码研究院</div>
         </div>
         <Menu
-          className='min-w-[500px]'
+          className='min-w-[200px]'
           style={{
             borderBottom: 0
           }}
