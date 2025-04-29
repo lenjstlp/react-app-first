@@ -17,6 +17,7 @@ const Login = lazy(() => import('@/pages/Login/index'))
 // const Article = lazy(() => import('@/pages/Article'))
 // const Publish = lazy(() => import('@/pages/Publish'))
 const NotFound = lazy(() => import('@/components/NotFound'))
+const Write = lazy(() => import('@/pages/write'))
 
 // 配置路由实例
 const router = createBrowserRouter([
@@ -57,13 +58,19 @@ const router = createBrowserRouter([
         path: '/',
         name: '研究院',
         element: lazyLoad(() => import('@/pages/CodeResearch'))
-      },
-      {
-        path: '/write',
-        name: '写文章',
-        element: lazyLoad(() => import('@/pages/CodeResearch/Write'))
       }
     ]
+  },
+  {
+    path: '/write',
+    name: '写文章',
+    element: (
+      <Suspense fallback={'加载中'}>
+        <AuthRoute>
+          <Write />
+        </AuthRoute>
+      </Suspense>
+    )
   },
   {
     path: '/login',
