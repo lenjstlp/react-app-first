@@ -9,8 +9,11 @@ import math from '@bytemd/plugin-math'
 // import mathSSR from '@bytemd/plugin-math-ssr'
 import zoom from '@bytemd/plugin-medium-zoom'
 import mermaid from '@bytemd/plugin-mermaid'
+
 import 'bytemd/dist/index.css'
-import 'github-markdown-css/github-markdown.css'
+
+import 'juejin-markdown-themes/dist/github.css'
+
 import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.css'
 import zh_Hans from 'bytemd/locales/zh_Hans.json'
