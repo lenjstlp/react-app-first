@@ -55,7 +55,7 @@ function ArticleManage() {
     const { code } = await deleteArticle({ articleId: id })
     if (code === 0) {
       message.success('删除文章成功')
-      queryArticleList()
+      queryArticleList(articleParams)
     }
   }
 
