@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Editor } from '@bytemd/react'
 import gfm from '@bytemd/plugin-gfm'
 import frontmatter from '@bytemd/plugin-frontmatter'
@@ -30,9 +29,7 @@ const plugins = [
   mermaid()
 ]
 
-function WriteEditor({ valueChange }) {
-  const [value, setValue] = useState('')
-
+function WriteEditor({ value, setValue }) {
   return (
     <div className='h-[100%]'>
       <Editor
@@ -45,7 +42,6 @@ function WriteEditor({ valueChange }) {
         }}
         onChange={(v) => {
           setValue(v)
-          valueChange(v)
         }}
       />
     </div>
