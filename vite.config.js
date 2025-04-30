@@ -5,6 +5,7 @@ import path from 'path'
 
 import { visualizer } from 'rollup-plugin-visualizer'
 import AutoImport from 'unplugin-auto-import/vite'
+import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -18,6 +19,11 @@ export default defineConfig({
       gzipSize: true,
       brotliSize: true,
       emitFile: false
+    }),
+    svgr({
+      svgrOptions: {
+        icon: true
+      }
     }),
     AutoImport({
       imports: ['react', 'react-router-dom'],
