@@ -1,0 +1,82 @@
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { Space, theme } from 'antd'
+import ViewerContent from '@/components/Viewer'
+import Look from '@/assets/svg/look.svg?react'
+import Shujia from '@/assets/svg/shujia.svg?react'
+import { useSelector } from 'react-redux'
+import { getArticleById } from '@/apis/article'
+
+import { formatDate } from '@/utils'
+
+function Article() {
+  const location = useLocation()
+  const navigate = useNavigate()
+  const {
+    token: { colorPrimary }
+  } = theme.useToken()
+
+  const [value, setValue] = useState('')
+
+  // user
+  const userInfo = useSelector((state) => state.user.userInfo)
+
+  const isAuthor = userInfo.token && userInfo.id === value.creatorId
+
+  async function queryArticleById() {
+    const id = location.pathname.split('/')[2]
+    const { code, data } = await getArticleById({ id })
+    if (code === 0) {
+      setValue(data)
+    }
+  }
+
+  useEffect(() => {
+    queryArticleById()
+  }, [])
+
+  return (
+    <div className='flex items-start justify-center p-[15px] h-[100%] bg-[#f5f5f5]'>
+      <div className='w-[100px] bg-[#fff]'>左侧</div>
+      <div className='p-[36px] mx-[15px] w-[800px] bg-[#fff]'>
+        <div className='flex flex-col'>
+          <div className='font-bold text-[30px] text-wrap'>{value.title}</div>
+          <div className='flex py-[15px] text-[16px] text-[#8a919f]'>
+            <Space size='middle'>
+              <div>{value.creator}</div>
+              <div>{formatDate(value.createTime)}</div>
+              <div className='flex items-center justify-center'>
+                <Look className='text-[16px] mr-[5px]' />
+                {value.read}
+              </div>
+              {value.specialColumn && (
+                <div className='flex items-center justify-center'>
+                  <Shujia className='text-[16px] mr-[5px]' />
+                  专栏：
+                  {value.specialColumn}
+                </div>
+              )}
+            </Space>
+            {isAuthor && (
+              <div
+                style={{ color: colorPrimary }}
+                className='flex ml-auto cursor-pointer'
+                onClick={() =>
+                  navigate('/write' + '?' + 'id' + '=' + value.id)
+                }>
+                编辑
+              </div>
+            )}
+          </div>
+          <div className='flex justify-center items-center h-[50px] text-[19px] text-[#fff] mb-[20px] bg-[tan]'>
+            自学游戏引擎，做独游制作人，当自己的老板！
+          </div>
+        </div>
+        <ViewerContent value={value.content} />
+      </div>
+      <div className='w-[200px] p-[15px] bg-[#fff]'>右侧</div>
+    </div>
+  )
+}
+
+export default Article
