@@ -37,18 +37,18 @@ const router = createBrowserRouter([
         element: lazyLoad(() => import('@/pages/Layout/Backend')),
         children: [
           {
-            path: '/backend',
+            path: '',
             index: true,
             name: '首页',
             element: lazyLoad(() => import('@/pages/Home'))
           },
           {
-            path: '/backend/publish',
+            path: 'publish',
             name: '创建文章',
             element: lazyLoad(() => import('@/pages/publish'))
           },
           {
-            path: '/backend/articleManage',
+            path: 'articleManage',
             name: '管理文章',
             element: lazyLoad(() => import('@/pages/articleManage'))
           }
@@ -58,6 +58,11 @@ const router = createBrowserRouter([
         path: '/',
         name: '研究院',
         element: lazyLoad(() => import('@/pages/CodeResearch'))
+      },
+      {
+        path: 'article/:id',
+        name: '文章',
+        element: lazyLoad(() => import('@/pages/article/index'))
       }
     ]
   },
