@@ -15,3 +15,24 @@ export function getList(data) {
 export function deleteArticle(data) {
   return http.post('/article/deleteById', data)
 }
+
+// 研究院**************************
+export function addAndEditArticle(data, id) {
+  let url = ''
+  if (id) {
+    url = '/article/editArticle'
+  } else {
+    url = '/article/addArticle'
+  }
+  return http.post(url, data)
+}
+
+// 文章列表
+export function pageList(data) {
+  return http.post('/article/pageList', data)
+}
+
+// 文章详情
+export function getArticleById(data) {
+  return http.post('/article/getArticleById', data)
+}
