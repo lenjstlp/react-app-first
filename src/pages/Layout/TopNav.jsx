@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Menu, theme, Space, Badge, Avatar } from 'antd'
-import { SoundOutlined } from '@ant-design/icons'
+import { Menu, theme, Space, Badge } from 'antd'
+import { SignatureFilled, BellFilled } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 
 import AvatarPopover from './AvatarPopover'
@@ -75,8 +75,19 @@ function TopNav() {
       />
       <div className='ml-auto cursor-pointer'>
         <Space size='middle'>
+          <div
+            className='w-[33px] flex flex-col items-center text-[#6e6b6b]'
+            onClick={() => {
+              navigate('/write')
+            }}>
+            <SignatureFilled className='text-[22px]' />
+            <div className='text-[12px]'>创作</div>
+          </div>
           <Badge count={5}>
-            <Avatar icon={<SoundOutlined />} />
+            <div className='w-[33px] flex flex-col items-center text-[#6e6b6b]'>
+              <BellFilled className='text-[22px]' />
+              <div className='text-[12px]'>消息</div>
+            </div>
           </Badge>
           {<AvatarPopover />}
         </Space>
