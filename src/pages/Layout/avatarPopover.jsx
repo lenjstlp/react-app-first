@@ -58,7 +58,7 @@ function AvatarPopover() {
   )
 
   return (
-    <Popover content={avatarContent} trigger='hover'>
+    <Popover content={avatarContent} trigger='click'>
       {userInfo.avatar ? (
         <Avatar src={<img src={userInfo.avatar} alt='avatar' />} />
       ) : (
