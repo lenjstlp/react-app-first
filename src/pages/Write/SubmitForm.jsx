@@ -23,7 +23,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
   console.log(articleParams, 'articleParams')
 
   useEffect(() => {
-    form.setFieldValue({ ...articleParams })
+    form.setFieldsValue({ ...articleParams })
   }, [])
 
   async function onFinish(val) {
@@ -77,8 +77,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
       style={{ maxWidth: 600 }}
       initialValues={{
         channel: '1',
-        abstract: '',
-        ...articleParams
+        abstract: ''
       }}
       onFinish={onFinish}>
       <Form.Item
