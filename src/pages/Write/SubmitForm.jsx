@@ -25,14 +25,35 @@ function SubmitForm({ articleParams, setPopoverShow }) {
 
   useEffect(() => {
     form.setFieldsValue({ ...articleParams })
+    const url = articleParams.cover
+    if (url) {
+      setFileList([
+        {
+          uid: '-1',
+          name: url.split('/').pop(),
+          status: 'done',
+          url
+        }
+      ])
+    }
   }, [])
 
   const navigate = useNavigate()
   async function onFinish(val) {
     const formData = new FormData()
-    fileList.forEach((file) => {
-      formData.append('cover', file.originFileObj)
-    })
+
+    // 处理封面
+    const file = fileList[0]
+    if (fileList.length > 0) {
+      if (file.originFileObj) {
+        formData.append('cover', file.originFileObj)
+      } else {
+        formData.append('coverUrl', file.url)
+      }
+    } else {
+      formData.append('coverDelete', 'coverDelete')
+    }
+
     const obj = {
       ...val,
       content: articleParams.content,
@@ -42,9 +63,8 @@ function SubmitForm({ articleParams, setPopoverShow }) {
     Object.keys(obj).forEach((i) => {
       formData.append(i, obj[i])
     })
-    console.log(formData, val, articleParams, 'formData')
 
-    const { code } = await addAndEditArticle(formData, { id: articleParams.id })
+    const { code } = await addAndEditArticle(formData, articleParams.id)
     const status = 'success'
     const title = articleParams.id ? '编辑文章成功' : '创建文章成功'
     if (code === 0) {
@@ -107,6 +127,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
         <Upload
           listType='picture-card'
           maxCount={1}
+          fileList={fileList}
           onChange={handleChange}
           onPreview={handlePreview}
           beforeUpload={() => false}>
