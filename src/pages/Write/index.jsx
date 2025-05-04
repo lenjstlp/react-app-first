@@ -8,7 +8,7 @@ import { getArticleById } from '@/apis/article'
 
 function Write() {
   const [params] = useSearchParams()
-  const id = params.get('id')
+  const id = params.get('id') // id 存在作为编辑模式
   async function queryArticleById() {
     const { code, data } = await getArticleById({ id })
     if (code === 0) {
@@ -21,7 +21,7 @@ function Write() {
   }
 
   useEffect(() => {
-    id && queryArticleById()
+    id && queryArticleById() // 编辑模式根据 id 获取文章详情
   }, [])
 
   const [addArticleParams, setAddArticleParams] = useState({

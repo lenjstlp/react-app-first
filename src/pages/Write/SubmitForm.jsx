@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Form,
   Select,
@@ -26,6 +27,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
     form.setFieldsValue({ ...articleParams })
   }, [])
 
+  const navigate = useNavigate()
   async function onFinish(val) {
     const formData = new FormData()
     fileList.forEach((file) => {
@@ -43,10 +45,14 @@ function SubmitForm({ articleParams, setPopoverShow }) {
     console.log(formData, val, articleParams, 'formData')
 
     const { code } = await addAndEditArticle(formData, { id: articleParams.id })
+    const status = 'success'
+    const title = articleParams.id ? '编辑文章成功' : '创建文章成功'
     if (code === 0) {
       form.resetFields()
       setPopoverShow(false)
-      message.success('创建文章成功')
+      navigate('/resultPage', { state: { status, title } })
+    } else {
+      message.warning(title)
     }
   }
 
