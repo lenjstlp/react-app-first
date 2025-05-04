@@ -63,6 +63,11 @@ const router = createBrowserRouter([
         path: 'article/:id',
         name: '文章',
         element: lazyLoad(() => import('@/pages/article/index'))
+      },
+      {
+        path: 'resultPage',
+        name: '反馈页面',
+        element: lazyLoad(() => import('@/pages/Result/ResultPage'))
       }
     ]
   },
