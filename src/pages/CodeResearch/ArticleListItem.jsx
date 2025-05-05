@@ -10,7 +10,7 @@ function ArticleListItem({ articleItem }) {
   return (
     <div
       data-e-key={articleItem.id}
-      className='flex w-[100%] h-[100px] border-b-2 border-[#f7f8f9] py-[15px] cursor-pointer'>
+      className='flex w-[100%] h-[100px] border-b-2 border-[#f7f8f9] py-[15px] cursor-pointer hover:bg-[#f5f5f5]'>
       <div
         className='left flex flex-col justify-between'
         style={{
@@ -23,7 +23,7 @@ function ArticleListItem({ articleItem }) {
         <div className='flex'>
           <Space className='text-[#8a919f]'>
             <div>{articleItem.creator}</div>
-            <div className='h-[12px] border-r-1 border-[#f7f8f9]'></div>
+            <div className='h-[12px] border-r-1 border-[#bcb8b8]'></div>
             <div className='flex items-center'>
               <Look className='text-[18px]' />
               {articleItem.read}
