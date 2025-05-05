@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Popover, Avatar, theme } from 'antd'
 import { UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
@@ -23,8 +24,11 @@ function AvatarPopover() {
 
   const location = useLocation()
 
+  const [popoverShow, setPopoverShow] = useState(false)
   function myPageClick() {
-    !location.pathname.includes('/user') && navigate('/user/' + userInfo.id)
+    !location.pathname.includes('/user') &&
+      navigate('/user/' + userInfo.id) &&
+      setPopoverShow(false)
   }
 
   const avatarContent = (
@@ -72,11 +76,14 @@ function AvatarPopover() {
   )
 
   return (
-    <Popover content={avatarContent} trigger='click'>
+    <Popover open={popoverShow} content={avatarContent} trigger='click'>
       {userInfo.avatar ? (
-        <Avatar src={<img src={userInfo.avatar} alt='avatar' />} />
+        <Avatar
+          src={<img src={userInfo.avatar} alt='avatar' />}
+          onClick={() => setPopoverShow(true)}
+        />
       ) : (
-        <Avatar icon={<UserOutlined />} />
+        <Avatar icon={<UserOutlined />} onClick={() => setPopoverShow(true)} />
       )}
     </Popover>
   )
