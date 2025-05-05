@@ -1,7 +1,7 @@
 import { Popover, Avatar, theme } from 'antd'
 import { UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { clearUserInfo } from '@/store/modules/user'
 import { vitOptions } from '@/common'
 import { dictSelect } from '@/utils'
@@ -21,6 +21,12 @@ function AvatarPopover() {
     navigate('/login')
   }
 
+  const location = useLocation()
+
+  function myPageClick() {
+    !location.pathname.includes('/user') && navigate('/user/' + userInfo.id)
+  }
+
   const avatarContent = (
     <div className='w-[160px] cursor-pointer'>
       <div className='h-[55px] flex flex-col'>
@@ -38,6 +44,14 @@ function AvatarPopover() {
         </div>
       </div>
       <div className='border-t-1 border-[#e3e5e7]'></div>
+      <div
+        style={{ borderRadius: borderRadiusLG }}
+        className='h-[39px] flex items-center justify-between px-[10px] hover:bg-[#e6f4ff] hover:text-[#1677ff]'
+        onClick={() => myPageClick()}>
+        <UserOutlined className='text-[18px]' />
+        <div className='text-left flex-1 mx-[10px]'>我的主页</div>
+        <RightOutlined className=' text-[18px]' />
+      </div>
       <div
         style={{ borderRadius: borderRadiusLG }}
         className='h-[39px] flex items-center justify-between px-[10px] hover:bg-[#e6f4ff] hover:text-[#1677ff]'>
