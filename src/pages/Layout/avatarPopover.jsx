@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Popover, Avatar, theme } from 'antd'
 import { UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
@@ -6,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { clearUserInfo } from '@/store/modules/user'
 import { vitOptions } from '@/common'
 import { dictSelect } from '@/utils'
+import useOutSideClickPopover from '@/hooks/useOutSideClickPopover'
 
 function AvatarPopover() {
   const {
@@ -24,7 +24,7 @@ function AvatarPopover() {
 
   const location = useLocation()
 
-  const [popoverShow, setPopoverShow] = useState(false)
+  const { popoverRef, popoverShow, setPopoverShow } = useOutSideClickPopover()
   function myPageClick() {
     !location.pathname.includes('/user') &&
       navigate('/user/' + userInfo.id) &&
@@ -32,7 +32,7 @@ function AvatarPopover() {
   }
 
   const avatarContent = (
-    <div className='w-[160px] cursor-pointer'>
+    <div ref={popoverRef} className='w-[160px] cursor-pointer'>
       <div className='h-[55px] flex flex-col'>
         <div className='text-[#002fa7] self-center text-[16px]'>
           {userInfo.name}
@@ -80,10 +80,13 @@ function AvatarPopover() {
       {userInfo.avatar ? (
         <Avatar
           src={<img src={userInfo.avatar} alt='avatar' />}
-          onClick={() => setPopoverShow(true)}
+          onClick={() => setPopoverShow(!popoverShow)}
         />
       ) : (
-        <Avatar icon={<UserOutlined />} onClick={() => setPopoverShow(true)} />
+        <Avatar
+          icon={<UserOutlined />}
+          onClick={() => setPopoverShow(!popoverShow)}
+        />
       )}
     </Popover>
   )

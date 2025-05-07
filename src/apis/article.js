@@ -32,6 +32,11 @@ export function pageList(data) {
   return http.post('/article/pageList', data)
 }
 
+// 文章列表
+export function userPageList(data) {
+  return http.post('/article/userPageList', data)
+}
+
 // 文章详情
 export function getArticleById(data) {
   return http.post('/article/getArticleById', data)
