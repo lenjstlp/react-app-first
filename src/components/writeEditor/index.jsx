@@ -11,7 +11,8 @@ import mermaid from '@bytemd/plugin-mermaid'
 
 import 'bytemd/dist/index.css'
 
-import 'juejin-markdown-themes/dist/github.css'
+// import 'juejin-markdown-themes/dist/github.css'
+import 'juejin-markdown-themes/dist/juejin.css'
 
 import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.css'
