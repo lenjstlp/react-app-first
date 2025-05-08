@@ -10,3 +10,8 @@ export function log401() {
 export function getDict(data) {
   return http.post('/dict/getDicts', data)
 }
+
+// 上传图片
+export function uploadPictures(data) {
+  return http.post('/article/pictures', data)
+}
