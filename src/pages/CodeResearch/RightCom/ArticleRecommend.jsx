@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { theme } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { getRecommendArticles } from '@/apis/article'
@@ -19,6 +20,8 @@ function ArticleRecommend() {
   useEffect(() => {
     changeHotArticles()
   }, [])
+
+  const navigate = useNavigate()
   return (
     <div
       style={{ borderRadius: borderRadiusLG }}
@@ -36,7 +39,8 @@ function ArticleRecommend() {
         return (
           <div
             key={i.id}
-            className='flex items-center h-[36px] text-[16px] cursor-pointer'>
+            className='flex items-center h-[36px] text-[16px] cursor-pointer'
+            onClick={() => navigate(`/article/${i.id}`)}>
             <div className='mr-[15px]'>{index + 1}</div>
             <div className='truncate'>{i.title}</div>
           </div>
