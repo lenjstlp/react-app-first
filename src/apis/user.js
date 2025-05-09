@@ -5,3 +5,7 @@ import http from '@/http'
 export function login(data) {
   return http.post('/login', data)
 }
+
+export function getUserInfoDetail() {
+  return http.post('/user/userDetail')
+}
