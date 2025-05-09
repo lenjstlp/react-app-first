@@ -3,14 +3,15 @@ import { UserOutlined, LogoutOutlined, RightOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { clearUserInfo } from '@/store/modules/user'
-import { vitOptions } from '@/common'
-import { dictSelect } from '@/utils'
 import useOutSideClickPopover from '@/hooks/useOutSideClickPopover'
+import useDicts, { dictSelect } from '@/hooks/useDicts'
 
 function AvatarPopover() {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
+
+  const { dicts } = useDicts({ type: 'VIP_LEVEL' })
 
   const userInfo = useSelector((state) => state.user.userInfo)
   const dispatch = useDispatch()
@@ -43,7 +44,8 @@ function AvatarPopover() {
               borderRadius: borderRadiusLG
             }}
             className='bg-[#002fa7] text-white px-[5px]'>
-            {dictSelect(vitOptions, userInfo.level)}
+            {dicts['VIP_LEVEL'] &&
+              dictSelect(dicts['VIP_LEVEL'], userInfo.level)}
           </span>
         </div>
       </div>

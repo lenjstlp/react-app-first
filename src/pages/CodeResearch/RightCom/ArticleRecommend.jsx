@@ -12,7 +12,6 @@ function ArticleRecommend() {
   async function changeHotArticles() {
     const { code, data } = await getRecommendArticles()
     if (code === 0) {
-      console.log(data)
       setHotArticles(data)
     }
   }
