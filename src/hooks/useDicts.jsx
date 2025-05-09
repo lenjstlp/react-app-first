@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getDict } from '@/apis/common'
+import { dictSelect } from '@/utils'
 
 function useDicts({ type }) {
   const [dicts, setDicts] = useState({})
@@ -20,5 +21,6 @@ function useDicts({ type }) {
     dicts
   }
 }
+export { dictSelect }
 
 export default useDicts

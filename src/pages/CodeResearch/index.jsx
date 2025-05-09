@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Tabs, theme } from 'antd'
 import ArticleList from './ArticleList'
+import RightCom from './RightCom/index'
 import useDicts from '@/hooks/useDicts'
 
 function CodeResearch() {
@@ -79,10 +80,8 @@ function CodeResearch() {
           onChange={tabChange}></Tabs>
         <ArticleList articleListParams={articleListParams} />
       </div>
-      <div
-        className='w-[300px] bg-[#fff]'
-        style={{ borderRadius: borderRadiusLG }}>
-        右侧导航
+      <div className='w-[280px]' style={{ borderRadius: borderRadiusLG }}>
+        <RightCom />
       </div>
     </div>
   )

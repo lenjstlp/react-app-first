@@ -46,3 +46,8 @@ export function getArticleById(data) {
 export function createColumn(data) {
   return http.post('/article/createColumn', data)
 }
+
+// 换一批推荐文章
+export function getRecommendArticles(data) {
+  return http.post('/article/recommendArticles', data)
+}
