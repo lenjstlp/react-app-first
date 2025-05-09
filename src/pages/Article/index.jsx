@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Space, theme } from 'antd'
 import ViewerContent from '@/components/Viewer'
+import ArticleRight from './ArticleRight'
 import Look from '@/assets/svg/look.svg?react'
 import Shujia from '@/assets/svg/shujia.svg?react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCurArticleInfo } from '@/store/modules/article'
 import { getArticleById } from '@/apis/article'
-
 import { formatDate } from '@/utils'
 
 function Article() {
@@ -15,6 +16,8 @@ function Article() {
   const {
     token: { colorPrimary }
   } = theme.useToken()
+
+  const dispatch = useDispatch()
 
   const [value, setValue] = useState('')
 
@@ -27,6 +30,7 @@ function Article() {
     const id = location.pathname.split('/')[2]
     const { code, data } = await getArticleById({ id })
     if (code === 0) {
+      dispatch(setCurArticleInfo(data))
       setValue(data)
     }
   }
@@ -69,12 +73,14 @@ function Article() {
             )}
           </div>
           <div className='flex justify-center items-center h-[50px] text-[19px] text-[#fff] mb-[20px] bg-[tan]'>
-            自学游戏引擎，做独游制作人，当自己的老板！
+            广告位招租！
           </div>
         </div>
         <ViewerContent value={value.content} />
       </div>
-      <div className='w-[200px] p-[15px] bg-[#fff]'>右侧</div>
+      <div className='w-[260px]'>
+        <ArticleRight />
+      </div>
     </div>
   )
 }
