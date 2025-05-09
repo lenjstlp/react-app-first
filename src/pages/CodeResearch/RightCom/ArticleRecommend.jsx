@@ -23,7 +23,7 @@ function ArticleRecommend() {
   return (
     <div
       style={{ borderRadius: borderRadiusLG }}
-      className='bg-[#fff] p-[15px]'>
+      className='bg-[#fff] p-[15px] mb-[15px]'>
       <div className='flex justify-between text-[18px] pb-[10px] border-b-1 border-[#f2f3f5]'>
         <div>热门推荐</div>
         <div
