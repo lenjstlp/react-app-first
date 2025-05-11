@@ -2,16 +2,13 @@ import { useEffect, useState } from 'react'
 import { theme, Avatar, Button } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-import useDicts, { dictSelect } from '@/hooks/useDicts'
-
+import VipText from '@/components/VipText'
 import { getUserInfoDetail } from '@/apis/user'
 
 function ArticleAuthor() {
   const {
-    token: { borderRadiusLG, colorPrimary }
+    token: { borderRadiusLG }
   } = theme.useToken()
-
-  const { dicts } = useDicts({ type: 'VIP_LEVEL' })
 
   const [userInfoDetail, setUserInfoDetail] = useState({})
   async function queryUserInfoDetail() {
@@ -46,12 +43,7 @@ function ArticleAuthor() {
         <div className='flex flex-col justify-between py-[5px]'>
           <div className='flex items-center text-[16px] px-[5px]'>
             <div className='mr-[5px]'>{userInfo.name}</div>
-            <div
-              style={{ background: colorPrimary, borderRadius: borderRadiusLG }}
-              className='text-[12px] px-[5px] py-[3px] text-[#fff] text-nowrap'>
-              {dicts['VIP_LEVEL'] &&
-                dictSelect(dicts['VIP_LEVEL'], userInfo.level)}
-            </div>
+            <VipText />
           </div>
           <div className='text-[#8a919f] text-[14px]'>{userInfo.intro}</div>
         </div>

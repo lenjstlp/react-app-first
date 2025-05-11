@@ -4,14 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { clearUserInfo } from '@/store/modules/user'
 import useOutSideClickPopover from '@/hooks/useOutSideClickPopover'
-import useDicts, { dictSelect } from '@/hooks/useDicts'
+import VipText from '@/components/VipText'
 
 function AvatarPopover() {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
-
-  const { dicts } = useDicts({ type: 'VIP_LEVEL' })
 
   const userInfo = useSelector((state) => state.user.userInfo)
   const dispatch = useDispatch()
@@ -39,14 +37,7 @@ function AvatarPopover() {
           {userInfo.name}
         </div>
         <div className='text-[12px] self-center'>
-          <span
-            style={{
-              borderRadius: borderRadiusLG
-            }}
-            className='bg-[#002fa7] text-white px-[5px]'>
-            {dicts['VIP_LEVEL'] &&
-              dictSelect(dicts['VIP_LEVEL'], userInfo.level)}
-          </span>
+          <VipText />
         </div>
       </div>
       <div className='border-t-1 border-[#e3e5e7]'></div>
