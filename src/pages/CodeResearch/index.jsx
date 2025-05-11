@@ -80,7 +80,7 @@ function CodeResearch() {
           onChange={tabChange}></Tabs>
         <ArticleList articleListParams={articleListParams} />
       </div>
-      <div className='w-[285px]' style={{ borderRadius: borderRadiusLG }}>
+      <div className='w-[260px]' style={{ borderRadius: borderRadiusLG }}>
         <RightCom />
       </div>
     </div>
