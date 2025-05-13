@@ -6,7 +6,7 @@ function ReactLayout() {
   return (
     <Layout className='h-[100%]'>
       <TopNav />
-      <div className='h-[calc(100%-60px)]'>
+      <div className='h-[calc(100%-60px)] overflow-hidden'>
         <Outlet />
       </div>
     </Layout>
