@@ -40,7 +40,7 @@ function Article() {
   }, [])
 
   return (
-    <div className='flex items-start justify-center p-[15px] h-[100%] bg-[#f5f5f5]'>
+    <div className='flex items-start justify-center p-[15px] h-[100%] bg-[#f5f5f5] overflow-y-auto'>
       <div className='w-[100px] bg-[#fff]'>左侧</div>
       <div className='mx-[15px]'>
         <div className='flex flex-col w-[800px] p-[36px] bg-[#fff]'>
@@ -77,7 +77,7 @@ function Article() {
           </div>
           <ViewerContent value={value.content} />
         </div>
-        <div className='bg-[#fff] w-[800px] mt-[15px] px-[36px] mb-[300px] overflow-hidden'>
+        <div className='bg-[#fff] w-[800px] mt-[15px] px-[36px] overflow-hidden'>
           <div className='my-[20px] font-bold text-[20px]'>所属专栏</div>
           <div className='flex pb-[15px] border-b-1 border-[#f2f3f5]'>
             <img
@@ -91,7 +91,8 @@ function Article() {
             />
             <div className='flex flex-col justify-between flex-1 px-[15px] w-[100%]'>
               <div className='text-[16px]'>专栏名称</div>
-              <div className='flex-1 text-[#8a919f]'>
+              <div className='text-[#8a919f] line-clamp-2'>
+                专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介
                 专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介
                 专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介
                 专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介专栏简介
@@ -104,6 +105,9 @@ function Article() {
               </Button>
               <Button type='primary' ghost>
                 订阅
+              </Button>
+              <Button type='primary' ghost>
+                取消订阅
               </Button>
             </div>
           </div>
