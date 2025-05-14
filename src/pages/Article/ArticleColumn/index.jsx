@@ -1,9 +1,21 @@
 import { theme, Button } from 'antd'
+import { useSelector } from 'react-redux'
 
 function ArticleColumn() {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
+
+  // user
+  const userInfo = useSelector((state) => state.user.userInfo)
+  // article
+  const articleInfo = useSelector((state) => state.article.curArticleInfo)
+
+  // 是否是作者
+  const isAuthor = userInfo.token && userInfo.id === articleInfo.creatorId
+  // 是否订阅，调接口
+  const isSubscribe = false
+
   return (
     <div className='bg-[#fff] w-[800px] mt-[15px] px-[36px] overflow-hidden'>
       <div className='my-[20px] font-bold text-[20px]'>所属专栏</div>
@@ -28,15 +40,19 @@ function ArticleColumn() {
           <div className='text-[#8a919f]'>15篇文章</div>
         </div>
         <div>
-          <Button type='primary' ghost>
-            进入专栏
-          </Button>
-          <Button type='primary' ghost>
-            订阅
-          </Button>
-          <Button type='primary' ghost>
-            取消订阅
-          </Button>
+          {isAuthor ? (
+            <Button type='primary' ghost>
+              进入专栏
+            </Button>
+          ) : isSubscribe ? (
+            <Button type='primary' ghost>
+              订阅
+            </Button>
+          ) : (
+            <Button type='primary' ghost>
+              取消订阅
+            </Button>
+          )}
         </div>
       </div>
       <div className='flex text-[16px] py-[20px]'>
