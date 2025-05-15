@@ -3,7 +3,7 @@ import { Form, Input, Upload, Modal, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
 import { uploadPictures } from '@/apis/common'
-import { createColumn as createColumnApi } from '@/apis/article'
+import { createColumn as createColumnApi } from '@/apis/column'
 function ColumnModal({
   modalOpen,
   setModalOpen,
