@@ -55,7 +55,7 @@ function CodeResearch() {
   const [articleList, setArticleList] = useState([])
   const [pageConfig, setPageConfig] = useState({
     pageNum: 1,
-    pageSize: 10,
+    pageSize: 15,
     total: 0
   })
 
