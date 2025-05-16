@@ -69,6 +69,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
     const title = articleParams.id ? '编辑文章成功' : '创建文章成功'
     if (code === 0) {
       form.resetFields()
+      localStorage.removeItem('EDIT_ARTICLE')
       setPopoverShow(false)
       navigate('/resultPage', { state: { status, title } })
     } else {

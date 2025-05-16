@@ -5,6 +5,7 @@ import Editor from '@/components/writeEditor'
 import AvatarPopover from '@/pages/Layout/avatarPopover'
 import SubmitForm from './SubmitForm'
 import { getArticleById } from '@/apis/article'
+import { debounce } from 'lodash-es'
 
 function Write() {
   const [params] = useSearchParams()
@@ -22,6 +23,12 @@ function Write() {
 
   useEffect(() => {
     id && queryArticleById() // 编辑模式根据 id 获取文章详情
+
+    !id &&
+      setAddArticleParams({
+        ...addArticleParams,
+        ...JSON.parse(localStorage.getItem('EDIT_ARTICLE'))
+      })
   }, [])
 
   const [addArticleParams, setAddArticleParams] = useState({
@@ -29,6 +36,21 @@ function Write() {
     content: '',
     abstract: ''
   })
+
+  function articleContentChange(val) {
+    const newData = {
+      ...addArticleParams,
+      content: val
+    }
+
+    setAddArticleParams(newData)
+    localStorage.setItem('EDIT_ARTICLE', JSON.stringify(newData))
+  }
+  // 静置 5 秒后暂存草稿
+  const debounceArticleContentChange = debounce(
+    (val) => articleContentChange(val),
+    3000
+  )
 
   const [popoverShow, setPopoverShow] = useState(false)
   const releaseContent = (
@@ -87,10 +109,7 @@ function Write() {
         <Editor
           value={addArticleParams.content}
           setValue={(value) => {
-            setAddArticleParams({
-              ...addArticleParams,
-              content: value
-            })
+            debounceArticleContentChange(value)
           }}
         />
       </div>
