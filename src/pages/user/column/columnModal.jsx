@@ -49,7 +49,11 @@ function ColumnModal({
 
   function onFinish(val) {
     console.log(val, fileList)
-    fileList.length ? uploadPic(val) : addColumn(val)
+    const obj = {
+      columnIntro: val.columnIntro,
+      columnName: val.columnName
+    }
+    fileList.length ? uploadPic(obj) : addColumn(obj)
   }
   function submit() {
     form.submit()
