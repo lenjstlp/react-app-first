@@ -4,7 +4,9 @@ function ColumnListItem({ columnItem }) {
   console.log(columnItem, '---')
 
   return (
-    <div className='flex px-[15px] bg-[#fff] w-[100%] h-[100px] border-b-2 border-[#f7f8f9] py-[15px] cursor-pointer hover:bg-[#f5f5f5]'>
+    <div
+      data-column-id={columnItem.id}
+      className='flex px-[15px] bg-[#fff] w-[100%] h-[100px] border-b-2 border-[#f7f8f9] py-[15px] cursor-pointer hover:bg-[#f5f5f5]'>
       <div className='w-[100px] mr-[10px]'>
         <img
           className='w-[100%] h-[100%] object-cover'

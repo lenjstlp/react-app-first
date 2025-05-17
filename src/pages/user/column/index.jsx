@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Empty from './empty'
 import ColumnModal from './columnModal'
 import ColumnListItem from './columnListItem'
@@ -40,8 +41,18 @@ function Column() {
     queryColumnList()
   }, [])
 
+  const navigate = useNavigate()
+  // 跳转专栏详情页
+  function columnItemClick(e) {
+    const targetElement = e.target.closest('[data-column-id]')
+    if (targetElement) {
+      const columnId = targetElement.getAttribute('data-column-id')
+      navigate(`/column/${columnId}`)
+    }
+  }
+
   return (
-    <div>
+    <div onClick={(e) => columnItemClick(e)}>
       {columnList.length > 0 ? (
         columnList.map((i) => {
           return <ColumnListItem key={i.id} columnItem={i} />
