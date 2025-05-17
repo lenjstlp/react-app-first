@@ -2,18 +2,28 @@ import { useState, useEffect } from 'react'
 import Empty from './empty'
 import ColumnModal from './columnModal'
 
+import { getColumnList } from '@/apis/column'
+
 function Column() {
   // 进入该页面先查询专栏列表，为空显示创建专栏
   const [columnList, setColumnList] = useState([])
+  // 获取登陆人专栏列表
+  async function queryColumnList() {
+    const { code, data } = await getColumnList()
+    if (code === 0) {
+      console.log(data, '-----')
+      setColumnList(data)
+    }
+  }
   function refreshColumnList() {
-    setColumnList([])
+    queryColumnList([])
   }
 
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
-    console.log(setColumnList)
-  })
+    queryColumnList()
+  }, [])
   return (
     <div>
       {columnList.length > 0 ? (
