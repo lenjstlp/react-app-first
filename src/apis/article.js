@@ -46,3 +46,8 @@ export function getArticleById(data) {
 export function getRecommendArticles(data) {
   return http.post('/article/recommendArticles', data)
 }
+
+// 根据文章ids获取专栏中的文章
+export function getColumnArticles(data) {
+  return http.post('/article/ArticleIds', data)
+}
