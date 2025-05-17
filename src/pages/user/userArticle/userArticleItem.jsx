@@ -13,8 +13,6 @@ function UserArticleItem({ articleItem }) {
     token: { borderRadiusLG }
   } = theme.useToken()
 
-  console.log(2222222)
-
   const { popoverShow, setPopoverShow, popoverRef } = useOutSideClickPopover()
 
   return (
