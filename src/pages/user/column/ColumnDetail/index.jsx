@@ -1,9 +1,26 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { theme } from 'antd'
+import { useLocation, useParams } from 'react-router-dom'
 import { getColumnArticles } from '@/apis/article'
+import { getColumnInfoById } from '@/apis/column'
 function ColumnDetail() {
+  const {
+    token: { borderRadiusLG }
+  } = theme.useToken()
+
   const location = useLocation()
   const articleIds = location.state.articleIds
+  const params = useParams()
+  const columnId = params.columnId
+
+  const [columnInfo, setColumnInfo] = useState({})
+  // 获取专栏详情
+  async function queryColumnInfo() {
+    const { code, data } = await getColumnInfoById({ columnId })
+    if (code === 0) {
+      setColumnInfo(data)
+    }
+  }
 
   const [articleList, setArticleList] = useState([])
   // 获取专栏文章列表
@@ -14,11 +31,28 @@ function ColumnDetail() {
     }
   }
   useEffect(() => {
+    queryColumnInfo()
     queryColumnArticles()
   }, [])
-  console.log(articleList, '文章列表刷新')
+  console.log(articleList, columnInfo, '文章列表刷新')
 
-  return <div>专栏详情页面</div>
+  return (
+    <div className='w-[900px] mx-auto'>
+      <div
+        style={{ borderRadius: borderRadiusLG }}
+        className='mt-[15px] bg-[#fff]'>
+        <div className='p-[15px]'>专栏详情</div>
+      </div>
+      <div className='mt-[15px]'>
+        <div
+          style={{ borderRadius: borderRadiusLG }}
+          className='bg-[#fff] p-[15px]'>
+          专栏文章列表
+        </div>
+        <div>articleList</div>
+      </div>
+    </div>
+  )
 }
 
 export default ColumnDetail
