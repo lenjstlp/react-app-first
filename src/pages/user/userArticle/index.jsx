@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import UserArticleItem from './userArticleItem'
 import { userPageList } from '@/apis/article'
 
-const UserArticle = forwardRef((props, ref) => {
+const UserArticle = forwardRef(function UserArticle(props, ref) {
   const location = useLocation()
   const userId = location.pathname.split('/').pop()
 
@@ -66,7 +66,5 @@ const UserArticle = forwardRef((props, ref) => {
     </div>
   )
 })
-
-UserArticle.displayName = 'UserArticle'
 
 export default UserArticle
