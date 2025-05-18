@@ -1,34 +1,52 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, forwardRef, useImperativeHandle } from 'react'
 import { useLocation } from 'react-router-dom'
 import UserArticleItem from './userArticleItem'
 import { userPageList } from '@/apis/article'
 
-function UserArticle() {
+const UserArticle = forwardRef((props, ref) => {
   const location = useLocation()
   const userId = location.pathname.split('/').pop()
 
   const [page, setPage] = useState({
     pageNum: 1,
-    pageSize: 15
+    pageSize: 15,
+    total: 0
   })
-  const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(false)
   const [articleList, setArticleList] = useState([])
-  async function queryArticleList(params) {
-    const { code, data } = await userPageList({ ...params, userId })
-    if (code === 0) {
-      setArticleList(data.data)
-      setTotal(data.total)
-      console.log(total, setPage)
-    }
-  }
-
-  useEffect(() => {
+  async function queryArticleList() {
+    if (loading) return
+    setLoading(true)
     const params = {
+      userId,
       pageNum: page.pageNum,
       pageSize: page.pageSize
     }
-    queryArticleList(params)
-  }, [page])
+    const { code, data } = await userPageList(params)
+    if (code === 0) {
+      setArticleList([...articleList, ...data.data])
+      setPage({
+        ...page,
+        total: data.total,
+        pageNum:
+          data.data.length === page.pageSize ? page.pageNum + 1 : page.pageNum
+      })
+    }
+    setLoading(false)
+  }
+
+  useImperativeHandle(ref, () => {
+    return {
+      // 对外暴露的数据方法
+      page,
+      articleList,
+      queryArticleList
+    }
+  })
+
+  useEffect(() => {
+    queryArticleList()
+  }, [])
 
   function articleListClick(e) {
     const targetElement = e.target.closest('[data-e-key]')
@@ -47,6 +65,8 @@ function UserArticle() {
       })}
     </div>
   )
-}
+})
+
+UserArticle.displayName = 'UserArticle'
 
 export default UserArticle

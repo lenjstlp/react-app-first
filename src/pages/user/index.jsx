@@ -1,15 +1,29 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { theme, Avatar, Button, Tabs } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 
 import UserArticle from './userArticle'
 import Column from './column'
+import { useContainerScrollToBottom } from '@/hooks/useContainerScrollToBottom'
 
 function User() {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
+
+  // 滚动事件
+  const containerRef = useRef(null)
+  const sonRef = useRef(null)
+  useContainerScrollToBottom(
+    () => {
+      console.log('到底部了', sonRef.current)
+      sonRef.current.page.total > sonRef.current.articleList.length &&
+        sonRef.current.queryArticleList()
+    },
+    containerRef,
+    100
+  )
 
   const userInfo = useSelector((state) => state.user.userInfo)
 
@@ -22,7 +36,7 @@ function User() {
     {
       key: '1',
       label: '文章',
-      ui: <UserArticle />
+      ui: <UserArticle ref={sonRef} />
     },
     {
       key: '2',
@@ -43,7 +57,7 @@ function User() {
   }
 
   return (
-    <div className='mt-[15px] h-[100%] overflow-y-auto'>
+    <div ref={containerRef} className='mt-[15px] h-[100%] overflow-y-auto'>
       <div className='w-[900px] mx-[auto]'>
         <div
           style={{ borderRadius: borderRadiusLG }}
