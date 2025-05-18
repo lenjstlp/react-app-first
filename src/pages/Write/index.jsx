@@ -29,6 +29,11 @@ function Write() {
         ...addArticleParams,
         ...JSON.parse(localStorage.getItem('EDIT_ARTICLE'))
       })
+
+    return () => {
+      // 编辑状态组件卸载时，清除本地存储
+      id && localStorage.removeItem('EDIT_ARTICLE')
+    }
   }, [])
 
   const [addArticleParams, setAddArticleParams] = useState({
