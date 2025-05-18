@@ -70,7 +70,7 @@ const router = createBrowserRouter([
         element: lazyLoad(() => import('@/pages/user/index'))
       },
       {
-        path: 'column',
+        path: 'column/:columnId',
         name: '专栏详情页',
         element: lazyLoad(
           () => import('@/pages/user/column/ColumnDetail/index')

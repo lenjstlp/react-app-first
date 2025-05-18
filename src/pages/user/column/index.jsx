@@ -48,7 +48,7 @@ function Column() {
     if (targetElement) {
       const columnId = targetElement.getAttribute('data-column-id')
       const articleIds = columnList.find((i) => i.id === columnId).articleIds
-      navigate(`/column`, {
+      navigate(`/column/${columnId}`, {
         state: {
           articleIds
         }
