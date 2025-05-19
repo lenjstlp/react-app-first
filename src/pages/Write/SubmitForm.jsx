@@ -13,6 +13,7 @@ import {
 import { PlusOutlined } from '@ant-design/icons'
 import useDicts from '@/hooks/useDicts'
 import { addAndEditArticle } from '@/apis/article'
+import { getColumnList } from '@/apis/column'
 
 function SubmitForm({ articleParams, setPopoverShow }) {
   // form实例绑定
@@ -24,6 +25,8 @@ function SubmitForm({ articleParams, setPopoverShow }) {
   console.log(articleParams, 'articleParams')
 
   useEffect(() => {
+    // 获取专栏下拉
+    queryColumnList()
     form.setFieldsValue({ ...articleParams })
     const url = articleParams.cover
     if (url) {
@@ -56,6 +59,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
 
     const obj = {
       ...val,
+      columnIds: val.columnIds ? val.columnIds.join(',') : '',
       content: articleParams.content,
       title: articleParams.title,
       id: articleParams.id
@@ -94,6 +98,39 @@ function SubmitForm({ articleParams, setPopoverShow }) {
       <div style={{ marginTop: 8 }}>Upload</div>
     </button>
   )
+
+  // 专栏
+  // 回填专栏多选框
+  function backfillColumnIds(data) {
+    const articleId = articleParams.id // 当前文章id
+    const arr = []
+    data.forEach((i) => {
+      const articleIdsArr = i.articleIds.split(',')
+      if (articleIdsArr.includes(articleId)) {
+        arr.push(i.id)
+      }
+    })
+    form.setFieldValue('columnIds', arr)
+  }
+  // 获取登陆人专栏列表
+  async function queryColumnList() {
+    const { code, data } = await getColumnList()
+    if (code === 0) {
+      const newData = data.map((i) => {
+        return {
+          ...i,
+          value: i.id,
+          label: i.columnName
+        }
+      })
+      setColumnOptions(newData)
+
+      // 编辑状态回填专栏多选框
+      articleParams.id && backfillColumnIds(newData)
+    }
+  }
+  // 专栏下拉数据
+  const [columnOptions, setColumnOptions] = useState([])
   return (
     <Form
       form={form}
@@ -145,6 +182,14 @@ function SubmitForm({ articleParams, setPopoverShow }) {
             src={previewImage}
           />
         )}
+      </Form.Item>
+      <Form.Item label='专栏' name='columnIds'>
+        <Select
+          placeholder='请选择文章专栏'
+          mode='multiple'
+          allowClear
+          options={columnOptions}
+        />
       </Form.Item>
       <Form.Item
         label='文章摘要'
