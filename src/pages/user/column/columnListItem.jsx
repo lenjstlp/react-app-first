@@ -21,7 +21,10 @@ function ColumnListItem({ columnItem }) {
         </div>
         <div>
           <div className='flex gap-[10px] text-[#8a919f]'>
-            <div>{formatDate(columnItem.createTime)}</div>
+            <div className='flex items-center'>
+              <div>创建于：</div>
+              {formatDate(columnItem.createTime)}
+            </div>
             <div className='flex items-center'>
               <div>文章数：</div>
               {columnItem.articleNum}
