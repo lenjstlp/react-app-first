@@ -18,8 +18,6 @@ import 'highlight.js/styles/github.css'
 import 'katex/dist/katex.css'
 import zh_Hans from 'bytemd/locales/zh_Hans.json'
 
-import './write.scss'
-
 const plugins = [
   gfm(),
   frontmatter(),
