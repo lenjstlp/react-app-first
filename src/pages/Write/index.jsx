@@ -49,13 +49,13 @@ function Write() {
     }
 
     setAddArticleParams(newData)
-    localStorage.setItem('EDIT_ARTICLE', JSON.stringify(newData))
+
+    debounceArticleContentSetStorage(newData)
   }
   // 静置 5 秒后暂存草稿
-  const debounceArticleContentChange = debounce(
-    (val) => articleContentChange(val),
-    3000
-  )
+  const debounceArticleContentSetStorage = debounce((val) => {
+    localStorage.setItem('EDIT_ARTICLE', JSON.stringify(val))
+  }, 5000)
 
   const [popoverShow, setPopoverShow] = useState(false)
   const releaseContent = (
@@ -114,7 +114,7 @@ function Write() {
         <Editor
           value={addArticleParams.content}
           setValue={(value) => {
-            debounceArticleContentChange(value)
+            articleContentChange(value)
           }}
         />
       </div>
