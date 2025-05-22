@@ -8,7 +8,7 @@ import Comments from '@/assets/svg/comments.svg?react'
 
 import useOutSideClickPopover from '@/hooks/useOutSideClickPopover'
 
-function UserArticleItem({ articleItem }) {
+function UserArticleItem({ articleItem, height }) {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
@@ -18,10 +18,11 @@ function UserArticleItem({ articleItem }) {
   return (
     <div
       data-e-key={articleItem.id}
+      style={{ height }}
       className='flex w-[100%] h-[100px] border-b-2 border-[#f7f8f9] py-[10px] cursor-pointer hover:bg-[#f5f5f5]'>
       <div
         style={{
-          width: articleItem.cover ? '500px' : '100%'
+          width: articleItem.cover ? '77%' : '100%'
         }}
         className='flex flex-col justify-between'>
         <div className='text-[20px] font-[600]'>{articleItem.title}</div>
