@@ -2,8 +2,20 @@
   height: calc(100vh - 60px) !important;
 }
 
-.markdown-body * {
+.markdown-body p,
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body li,
+.markdown-body blockquote,
+.markdown-body code,
+.markdown-body pre {
   all: revert;
-  box-sizing: border-box;
   font-family: inherit;
+  box-sizing: border-box;
 }
