@@ -5,7 +5,6 @@ import Editor from '@/components/writeEditor'
 import AvatarPopover from '@/pages/Layout/avatarPopover'
 import SubmitForm from './SubmitForm'
 import { getArticleById } from '@/apis/article'
-import { debounce } from 'lodash-es'
 
 function Write() {
   const [params] = useSearchParams()
@@ -28,7 +27,7 @@ function Write() {
     !id &&
       setAddArticleParams({
         ...addArticleParams,
-        ...JSON.parse(localStorage.getItem('EDIT_ARTICLE'))
+        content: JSON.parse(localStorage.getItem('EDIT_ARTICLE')) || ''
       })
 
     return () => {
@@ -51,12 +50,13 @@ function Write() {
 
     setAddArticleParams(newData)
 
-    debounceArticleContentSetStorage(newData)
+    // debounceArticleContentSetStorage(newData)
+    localStorage.setItem('EDIT_ARTICLE', JSON.stringify(val))
   }
   // 静置 5 秒后暂存草稿
-  const debounceArticleContentSetStorage = debounce((val) => {
-    localStorage.setItem('EDIT_ARTICLE', JSON.stringify(val))
-  }, 5000)
+  // const debounceArticleContentSetStorage = debounce((val) => {
+  //   localStorage.setItem('EDIT_ARTICLE', JSON.stringify(val))
+  // }, 5000)
 
   const [popoverShow, setPopoverShow] = useState(false)
   const releaseContent = (
