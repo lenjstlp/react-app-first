@@ -144,7 +144,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
       layout='horizontal'
       style={{ maxWidth: 600 }}
       initialValues={{
-        channel: '1',
+        channel: ['1'],
         abstract: ''
       }}
       onFinish={onFinish}>
