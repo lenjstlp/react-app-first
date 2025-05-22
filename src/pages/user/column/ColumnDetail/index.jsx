@@ -59,64 +59,66 @@ function ColumnDetail() {
     }
   }
   return (
-    <div className='w-[900px] mx-auto'>
-      <div
-        style={{ borderRadius: borderRadiusLG }}
-        className='mt-[15px] bg-[#fff] p-[15px]'>
-        <div className='text-[18px] mb-[15px]'>{columnInfo.columnName}</div>
-        <div className='flex'>
-          <img
-            className='w-[120px] h-[100%] object-cover'
-            src={columnInfo.columnCover}
-            alt=''
-          />
-          <div className='flex flex-col justify-between flex-1 ml-[15px]'>
-            <div className='flex items-center gap-[10px]'>
-              <Avatar
-                size={30}
-                src={<img src={userInfo.avatar} alt='avatar' />}
-              />
-              <div>{userInfo.name}</div>
-              <VipText />
-            </div>
-            <div className='text-[14px] text-[#8a919f] line-clamp-2'>
-              {columnInfo.columnIntro}
-            </div>
-            <div className='text-[#8a919f] text-[12px] mt-[15px]'>
-              <div className='flex gap-[10px] text-[#8a919f]'>
-                <div className='flex items-center'>
-                  <div>创建于：</div>
-                  {formatDate(columnInfo.createTime)}
-                </div>
-                <div className='flex items-center'>
-                  <div>文章数：</div>
-                  {columnInfo.articleNum}
-                </div>
-                <div className='flex items-center'>
-                  <div>订阅数：</div>
-                  {columnInfo.subscriberNum}
+    <div className='h-[100%] overflow-y-auto'>
+      <div className='w-[900px] mx-auto'>
+        <div
+          style={{ borderRadius: borderRadiusLG }}
+          className='mt-[15px] bg-[#fff] p-[15px]'>
+          <div className='text-[22px] mb-[15px]'>{columnInfo.columnName}</div>
+          <div className='flex'>
+            <img
+              className='w-[120px] h-[100%] object-cover'
+              src={columnInfo.columnCover}
+              alt=''
+            />
+            <div className='flex flex-col justify-between flex-1 ml-[15px]'>
+              <div className='flex items-center gap-[10px]'>
+                <Avatar
+                  size={30}
+                  src={<img src={userInfo.avatar} alt='avatar' />}
+                />
+                <div className='text-[22px]'>{userInfo.name}</div>
+                <VipText />
+              </div>
+              <div className='text-[14px] text-[#8a919f] line-clamp-2'>
+                {columnInfo.columnIntro}
+              </div>
+              <div className='text-[#8a919f] text-[12px] mt-[15px]'>
+                <div className='flex gap-[10px] text-[#8a919f]'>
+                  <div className='flex items-center'>
+                    <div>创建于：</div>
+                    {formatDate(columnInfo.createTime)}
+                  </div>
+                  <div className='flex items-center'>
+                    <div>文章数：</div>
+                    {columnInfo.articleNum}
+                  </div>
+                  <div className='flex items-center'>
+                    <div>订阅数：</div>
+                    {columnInfo.subscriberNum}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className='mt-[15px]'>
-        <div className='bg-[#fff] text-[16px] p-[15px] border-b-1 border-[#f2f3f5]'>
-          专栏文章列表
-        </div>
-        <div
-          className='bg-[#fff] mb-[100px] px-[15px]'
-          onClick={(e) => articleListClick(e)}>
-          {articleList.map((item) => {
-            return (
-              <UserArticleItem
-                height={'120px'}
-                key={item.id}
-                articleItem={item}
-              />
-            )
-          })}
+        <div className='mt-[15px]'>
+          <div className='bg-[#fff] text-[16px] p-[15px] border-b-1 border-[#f2f3f5]'>
+            专栏文章列表
+          </div>
+          <div
+            className='bg-[#fff] mb-[100px] px-[15px]'
+            onClick={(e) => articleListClick(e)}>
+            {articleList.map((item) => {
+              return (
+                <UserArticleItem
+                  height={'120px'}
+                  key={item.id}
+                  articleItem={item}
+                />
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>
