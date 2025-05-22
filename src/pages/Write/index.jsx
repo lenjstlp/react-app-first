@@ -16,7 +16,8 @@ function Write() {
       console.log(data, '===')
       setAddArticleParams({
         ...addArticleParams,
-        ...data
+        ...data,
+        channel: data.channel ? data.channel.split(',') : []
       })
     }
   }

@@ -8,7 +8,8 @@ import {
   message,
   Image,
   Space,
-  Input
+  Input,
+  Checkbox
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import useDicts from '@/hooks/useDicts'
@@ -27,6 +28,8 @@ function SubmitForm({ articleParams, setPopoverShow }) {
   useEffect(() => {
     // 获取专栏下拉
     queryColumnList()
+
+    // form实例绑定
     form.setFieldsValue({ ...articleParams })
     const url = articleParams.cover
     if (url) {
@@ -60,6 +63,7 @@ function SubmitForm({ articleParams, setPopoverShow }) {
     const obj = {
       ...val,
       columnIds: val.columnIds ? val.columnIds.join(',') : '',
+      channel: val.channel ? val.channel.join(',') : '',
       content: articleParams.content,
       title: articleParams.title,
       id: articleParams.id
@@ -148,40 +152,31 @@ function SubmitForm({ articleParams, setPopoverShow }) {
         label='频道'
         name='channel'
         rules={[{ required: true, message: '请输入频道' }]}>
-        <Select
-          placeholder='请选择文章频道'
-          rules={[{ required: true, message: '请选择你的频道' }]}>
-          {dicts['ARTICLE_CHANNEL'] &&
-            dicts['ARTICLE_CHANNEL'].map((i) => {
-              return (
-                <Select.Option value={i.value} key={i.value}>
-                  {i.label}
-                </Select.Option>
-              )
-            })}
-        </Select>
+        <Checkbox.Group options={dicts['ARTICLE_CHANNEL']} />
       </Form.Item>
       <Form.Item label={null} name='pic'>
-        <Upload
-          listType='picture-card'
-          maxCount={1}
-          fileList={fileList}
-          onChange={handleChange}
-          onPreview={handlePreview}
-          beforeUpload={() => false}>
-          {uploadButton}
-        </Upload>
-        {previewImage && (
-          <Image
-            wrapperStyle={{ display: 'none' }}
-            preview={{
-              visible: previewOpen,
-              onVisibleChange: (visible) => setPreviewOpen(visible),
-              afterOpenChange: (visible) => !visible && setPreviewImage('')
-            }}
-            src={previewImage}
-          />
-        )}
+        <div>
+          <Upload
+            listType='picture-card'
+            maxCount={1}
+            fileList={fileList}
+            onChange={handleChange}
+            onPreview={handlePreview}
+            beforeUpload={() => false}>
+            {uploadButton}
+          </Upload>
+          {previewImage && (
+            <Image
+              wrapperStyle={{ display: 'none' }}
+              preview={{
+                visible: previewOpen,
+                onVisibleChange: (visible) => setPreviewOpen(visible),
+                afterOpenChange: (visible) => !visible && setPreviewImage('')
+              }}
+              src={previewImage}
+            />
+          )}
+        </div>
       </Form.Item>
       <Form.Item label='专栏' name='columnIds'>
         <Select
