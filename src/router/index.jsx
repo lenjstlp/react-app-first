@@ -1,85 +1,86 @@
 // 配置路由
 import { createBrowserRouter } from 'react-router-dom'
-import { lazy, Suspense } from 'react'
-// import Layout from "@/pages/Layout";
-// import Login from "@/pages/Login/index";
-// import Home from "@/pages/Home"
-// import Article from "@/pages/Article"
-// import Publish from "@/pages/Publish"
-// import NotFound from '@/components/NotFound'
+import { lazy } from 'react'
 
 import { AuthRoute } from './AuthRoute'
 import { lazyLoad } from '@/utils'
 
 const Layout = lazy(() => import('@/pages/Layout'))
 const Login = lazy(() => import('@/pages/Login/index'))
-// const Home = lazy(() => import('@/pages/Home'))
-// const Article = lazy(() => import('@/pages/Article'))
-// const Publish = lazy(() => import('@/pages/Publish'))
 const NotFound = lazy(() => import('@/components/NotFound'))
 const Write = lazy(() => import('@/pages/write'))
+
+// 管理平台
+const Backend = lazyLoad(() => import('@/pages/Layout/Backend'))
+const Home = lazyLoad(() => import('@/pages/Home'))
+const Publish = lazyLoad(() => import('@/pages/publish'))
+const ArticleManage = lazyLoad(() => import('@/pages/articleManage'))
+// 研究院
+const CodeResearch = lazyLoad(() => import('@/pages/CodeResearch'))
+const Article = lazyLoad(() => import('@/pages/article/index'))
+const User = lazyLoad(() => import('@/pages/user/index'))
+const ColumnDetail = lazyLoad(
+  () => import('@/pages/user/column/ColumnDetail/index')
+)
+const ResultPage = lazyLoad(() => import('@/pages/Result/ResultPage'))
 
 // 配置路由实例
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <Suspense fallback={'加载组件动画...'}>
-        <AuthRoute>
-          <Layout />
-        </AuthRoute>
-      </Suspense>
+      <AuthRoute>
+        <Layout />
+      </AuthRoute>
     ),
     children: [
       {
         path: '/backend',
         name: '管理平台',
-        element: lazyLoad(() => import('@/pages/Layout/Backend')),
+        element: <Backend />,
         children: [
           {
             path: '',
             index: true,
             name: '首页',
-            element: lazyLoad(() => import('@/pages/Home'))
+            element: <Home />
           },
           {
             path: 'publish',
             name: '创建文章',
-            element: lazyLoad(() => import('@/pages/publish'))
+            element: <Publish />
           },
           {
             path: 'articleManage',
             name: '管理文章',
-            element: lazyLoad(() => import('@/pages/articleManage'))
+            element: <ArticleManage />
           }
         ]
       },
       {
-        path: '/',
+        index: true,
         name: '研究院',
-        element: lazyLoad(() => import('@/pages/CodeResearch'))
+        element: <CodeResearch />
       },
       {
         path: 'article/:id',
         name: '文章',
-        element: lazyLoad(() => import('@/pages/article/index'))
+        element: <Article />
       },
       {
         path: 'user/:id',
         name: '我的主页',
-        element: lazyLoad(() => import('@/pages/user/index'))
+        element: <User />
       },
       {
         path: 'column/:columnId',
         name: '专栏详情页',
-        element: lazyLoad(
-          () => import('@/pages/user/column/ColumnDetail/index')
-        )
+        element: <ColumnDetail />
       },
       {
         path: 'resultPage',
         name: '反馈页面',
-        element: lazyLoad(() => import('@/pages/Result/ResultPage'))
+        element: <ResultPage />
       }
     ]
   },
@@ -87,31 +88,25 @@ const router = createBrowserRouter([
     path: '/write',
     name: '写文章',
     element: (
-      <Suspense fallback={'加载中'}>
-        <AuthRoute>
-          <Write />
-        </AuthRoute>
-      </Suspense>
+      <AuthRoute>
+        <Write />
+      </AuthRoute>
     )
   },
   {
     path: '/login',
     element: (
-      <Suspense fallback={'加载中'}>
-        <AuthRoute>
-          <Login />
-        </AuthRoute>
-      </Suspense>
+      <AuthRoute>
+        <Login />
+      </AuthRoute>
     )
   },
   {
     path: '*',
     element: (
-      <Suspense fallback={'加载中'}>
-        <AuthRoute>
-          <NotFound />
-        </AuthRoute>
-      </Suspense>
+      <AuthRoute>
+        <NotFound />
+      </AuthRoute>
     )
   }
 ])
