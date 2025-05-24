@@ -1,15 +1,18 @@
+import { useContext } from 'react'
 import { theme } from 'antd'
 import { useSelector } from 'react-redux'
-import useDicts, { dictSelect } from '@/hooks/useDicts'
+import { dictSelect } from '@/hooks/useDicts'
+
+import { dictsContext } from '@/pages/Layout'
 
 function VipText() {
+  const { dicts } = useContext(dictsContext)
+
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
 
   const userInfo = useSelector((state) => state.user.userInfo)
-
-  const { dicts } = useDicts({ type: 'VIP_LEVEL' })
 
   return (
     <span

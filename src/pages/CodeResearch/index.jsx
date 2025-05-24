@@ -1,13 +1,15 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import { Tabs, theme } from 'antd'
 import ArticleList from './ArticleList'
 import RightCom from './RightCom/index'
-import useDicts from '@/hooks/useDicts'
 import { pageList } from '@/apis/article'
 
 import { useContainerScrollToBottom } from '@/hooks/useContainerScrollToBottom'
 
+import { dictsContext } from '@/pages/Layout'
+
 function CodeResearch() {
+  const { dicts } = useContext(dictsContext)
   // 滚动事件
   const containerRef = useRef(null)
 
@@ -46,8 +48,6 @@ function CodeResearch() {
     setLoading(false)
   }
 
-  const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL' })
-
   const {
     token: { colorPrimaryBgHover, borderRadiusLG }
   } = theme.useToken()
@@ -55,7 +55,7 @@ function CodeResearch() {
   const [articleList, setArticleList] = useState([])
   const [pageConfig, setPageConfig] = useState({
     pageNum: 1,
-    pageSize: 15,
+    pageSize: 20,
     total: 0
   })
 

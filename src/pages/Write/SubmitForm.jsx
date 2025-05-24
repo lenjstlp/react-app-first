@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Form,
@@ -12,16 +12,17 @@ import {
   Checkbox
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import useDicts from '@/hooks/useDicts'
 import { addAndEditArticle } from '@/apis/article'
 import { getColumnList } from '@/apis/column'
+
+import { dictsContext } from '@/pages/Layout'
 
 function SubmitForm({ articleParams, setPopoverShow }) {
   // form实例绑定
   const [form] = Form.useForm()
 
   // 频道字典获取
-  const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL' })
+  const { dicts } = useContext(dictsContext)
 
   console.log(articleParams, 'articleParams')
 
