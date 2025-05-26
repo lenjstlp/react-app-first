@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { Space, theme, Popover } from 'antd'
 import { SettingOutlined } from '@ant-design/icons'
 import ArticleListItemSettings from './articleListItemSettings'
@@ -8,10 +9,15 @@ import Comments from '@/assets/svg/comments.svg?react'
 
 import useOutSideClickPopover from '@/hooks/useOutSideClickPopover'
 
+import { dictSelect } from '@/hooks/useDicts'
+import { dictsContext } from '@/Pages/Layout'
+
 function UserArticleItem({ articleItem, height }) {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
+
+  const { dicts } = useContext(dictsContext)
 
   const { popoverShow, setPopoverShow, popoverRef } = useOutSideClickPopover()
 
@@ -76,7 +82,7 @@ function UserArticleItem({ articleItem, height }) {
                 <div
                   key={item}
                   className='flex mr-[5px] px-[10px] bg-[#f5f5f5] text-[#8a919f]'>
-                  {item}
+                  {dictSelect(dicts['ARTICLE_CHANNEL'], item)}
                 </div>
               )
             })}

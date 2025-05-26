@@ -1,11 +1,17 @@
+import { useContext } from 'react'
 import { Space, theme } from 'antd'
 import Look from '@/assets/svg/look.svg?react'
 import Good from '@/assets/svg/good.svg?react'
+
+import { dictSelect } from '@/hooks/useDicts'
+import { dictsContext } from '@/pages/Layout'
 
 function ArticleListItem({ articleItem }) {
   const {
     token: { borderRadiusLG }
   } = theme.useToken()
+
+  const { dicts } = useContext(dictsContext)
 
   return (
     <div
@@ -39,7 +45,7 @@ function ArticleListItem({ articleItem }) {
                 <div
                   key={item}
                   className='flex mr-[5px] px-[10px] bg-[#f5f5f5] text-[#8a919f]'>
-                  {item}
+                  {dictSelect(dicts['ARTICLE_CHANNEL'], item)}
                 </div>
               )
             })}
