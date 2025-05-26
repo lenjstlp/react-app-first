@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Form,
@@ -15,14 +15,9 @@ import { PlusOutlined } from '@ant-design/icons'
 import { addAndEditArticle } from '@/apis/article'
 import { getColumnList } from '@/apis/column'
 
-import { dictsContext } from '@/pages/Layout'
-
-function SubmitForm({ articleParams, setPopoverShow }) {
+function SubmitForm({ articleParams, setPopoverShow, dicts }) {
   // form实例绑定
   const [form] = Form.useForm()
-
-  // 频道字典获取
-  const { dicts } = useContext(dictsContext)
 
   console.log(articleParams, 'articleParams')
 

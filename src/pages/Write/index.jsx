@@ -6,7 +6,11 @@ import AvatarPopover from '@/pages/Layout/avatarPopover'
 import SubmitForm from './SubmitForm'
 import { getArticleById } from '@/apis/article'
 
+import useDicts from '@/hooks/useDicts'
+
 function Write() {
+  const { dicts } = useDicts({ type: 'ARTICLE_CHANNEL' })
+
   const [params] = useSearchParams()
   const id = params.get('id') // id 存在作为编辑模式
   async function queryArticleById() {
@@ -68,6 +72,7 @@ function Write() {
         <SubmitForm
           articleParams={addArticleParams}
           setPopoverShow={setPopoverShow}
+          dicts={dicts}
         />
       </div>
     </div>
