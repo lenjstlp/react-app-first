@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { message, Popconfirm } from 'antd'
 import DeleteSvg from '@/assets/svg/delete-svg.svg?react'
@@ -5,7 +6,10 @@ import Edit from '@/assets/svg/edit.svg?react'
 
 import { deleteArticle } from '@/apis/article'
 
+import { userArticleContext } from './index'
+
 function ArticleListItemSettings({ articleItem, popoverRef }) {
+  const { refreshArticleList } = useContext(userArticleContext)
   const navigate = useNavigate()
 
   function editClick() {
@@ -15,6 +19,7 @@ function ArticleListItemSettings({ articleItem, popoverRef }) {
     const { code } = await deleteArticle({ articleId: articleItem.id })
     if (code === 0) {
       message.success('删除文章成功')
+      refreshArticleList()
     }
   }
   return (
