@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { theme } from 'antd'
 import Empty from './empty'
 import ColumnModal from './columnModal'
 import ColumnListItem from './columnListItem'
@@ -7,6 +8,10 @@ import ColumnListItem from './columnListItem'
 import { getColumnList } from '@/apis/column'
 
 function Column() {
+  const {
+    token: { colorPrimary }
+  } = theme.useToken()
+
   // 进入该页面先查询专栏列表，为空显示创建专栏
   const [columnList, setColumnList] = useState([])
 
@@ -56,8 +61,22 @@ function Column() {
     }
   }
 
+  // 创建专栏
+  function createColumn() {
+    console.log('创建专栏')
+    setModalOpen(true)
+  }
+
   return (
     <div onClick={(e) => columnItemClick(e)}>
+      <div className='flex h-[26px] px-[15px] bg-[#fff]'>
+        <div
+          className='ml-auto cursor-pointer leading-[26px]'
+          style={{ color: colorPrimary }}
+          onClick={createColumn}>
+          创建专栏
+        </div>
+      </div>
       {columnList.length > 0 ? (
         columnList.map((i) => {
           return <ColumnListItem key={i.id} columnItem={i} />
