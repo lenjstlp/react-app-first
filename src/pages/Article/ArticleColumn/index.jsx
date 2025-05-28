@@ -17,7 +17,7 @@ function ArticleColumn() {
   const isSubscribe = false
 
   return (
-    <div className='bg-[#fff] w-[800px] mt-[15px] px-[36px] overflow-hidden'>
+    <div className='bg-[#fff] mt-[15px] px-[36px] overflow-hidden'>
       <div className='my-[20px] font-bold text-[20px]'>所属专栏</div>
       <div className='flex pb-[15px] border-b-1 border-[#f2f3f5]'>
         <img
