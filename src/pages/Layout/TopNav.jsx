@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Menu, theme, Space, Badge } from 'antd'
+import { Menu, theme, Space, Badge, Input } from 'antd'
 import { SignatureFilled, BellFilled } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 
@@ -52,6 +52,13 @@ function TopNav() {
     token: { borderRadiusLG }
   } = theme.useToken()
 
+  function onSearch(value) {
+    const trimValue = value.trim()
+    if (value.trim()) {
+      console.log(trimValue, '-=-==--==-=-')
+    }
+  }
+
   return (
     <div className='flex items-center bg-[#fff] h-[60px] px-[15px] shrink-0'>
       <div
@@ -72,6 +79,11 @@ function TopNav() {
         defaultSelectedKeys={[navValue]}
         items={navList}
         onClick={navListClick}
+      />
+      <Input.Search
+        placeholder='请输入关键词搜索'
+        onSearch={onSearch}
+        style={{ width: 300 }}
       />
       <div className='ml-auto cursor-pointer'>
         <Space size='middle'>
