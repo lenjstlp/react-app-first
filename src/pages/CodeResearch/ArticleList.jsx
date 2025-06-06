@@ -9,7 +9,6 @@ function ArticleList({ articleList }) {
       console.log(targetElement, targetElement.dataset.id)
       const eKey = targetElement.dataset.eKey
       navigate(`/article/${eKey}`)
-      // window.open(`/article/${eKey}`, '_blank')
     }
   }
 
